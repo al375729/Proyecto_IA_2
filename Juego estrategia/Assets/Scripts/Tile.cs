@@ -28,7 +28,7 @@ public class Tile : MonoBehaviour
 
     }
 
-    public bool isClear() // does this tile have an obstacle on it. Yes or No?
+    public bool isClear() // para detectar a los gameObjects con layer Obstacle
     {
         Collider2D col = Physics2D.OverlapCircle(transform.position, 0.2f, obstacles);
         if (col == null)
@@ -40,6 +40,7 @@ public class Tile : MonoBehaviour
         }
     }
 
+    //Cuando se selecciona una unidad para moverla, se resaltan los tiles a los que puede ir
     public void Highlight() {
 		
         rend.color = highlightedColor;
@@ -60,6 +61,8 @@ public class Tile : MonoBehaviour
 
     private void OnMouseDown()
     {
+        //Después de seleccionar el personaje y que resalten los tiles alcanzables,
+        //pulsamos en uno de éstos para que vaya hacia él
         if (isWalkable == true) {
             gm.selectedUnit.Move(this.transform);
         } else if (isCreatable == true && gm.createdUnit != null) {
@@ -78,6 +81,7 @@ public class Tile : MonoBehaviour
 
     private void OnMouseEnter()
     {
+        //Aumentar tamaño del tile cuando el ratón esté encima
         if (isClear() == true) {
 			source.Play();
 			sizeIncrease = true;
@@ -88,6 +92,7 @@ public class Tile : MonoBehaviour
 
     private void OnMouseExit()
     {
+        //El tile vuelve a su tamaño cuando el ratón sale
         if (isClear() == true)
         {
             sizeIncrease = false;

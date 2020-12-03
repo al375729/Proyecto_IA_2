@@ -6,19 +6,24 @@ using UnityEngine.UI;
 public class Unit : MonoBehaviour
 {
     public bool isSelected;
-    public bool hasMoved;
+    //Detectar si la unidad se ha movido en este turno
+    public bool hasMoved;       
 
+    // Distancia de tiles que puede caminar en cada turno
     public int tileSpeed;
     public float moveSpeed;
 
     private GM gm;
 
+    //Rango de los enemigos atacables
     public int attackRadius;
     public bool hasAttacked;
+    //Lista de los enemigos atacables en ese momento
     public List<Unit> enemiesInRange = new List<Unit>();
 
     public int playerNumber;
 
+    //Icono que indica a los enemigos atacables
     public GameObject weaponIcon;
 
     // Attack Stats
@@ -49,6 +54,7 @@ public class Unit : MonoBehaviour
         UpdateHealthDisplay();
     }
 
+    //Cambiar los números de la vida del rey
     private void UpdateHealthDisplay ()
     {
         if (isKing)
@@ -71,6 +77,7 @@ public class Unit : MonoBehaviour
 
         }
         else {
+            //El jugador lo ha seleccionado para moverlo o atacar a enemigos
             if (playerNumber == gm.playerTurn) { // select unit only if it's his turn
                 if (gm.selectedUnit != null)
                 { // deselect the unit that is currently selected, so there's only one isSelected unit at a time
@@ -91,11 +98,12 @@ public class Unit : MonoBehaviour
 
         }
 
-
-
+        //El adversario lo ha seleccionado para atacarlo
+        //(Se comprueba si ya hay una unidad seleccionada que no es él)
         Collider2D col = Physics2D.OverlapCircle(Camera.main.ScreenToWorldPoint(Input.mousePosition), 0.15f);
         if (col != null)
         {
+            // Obtener enemigo al que atacar y comprobar si es atacable por la unidad seleccionada
             Unit unit = col.GetComponent<Unit>(); // double check that what we clicked on is a unit
             if (unit != null && gm.selectedUnit != null)
             {
@@ -123,6 +131,8 @@ public class Unit : MonoBehaviour
             return;
         }
 
+        //Guardar en un vector todos los tiles en la partida 
+        //(se obtinenen con FindObjectsOfType<Tile>())
         Tile[] tiles = FindObjectsOfType<Tile>();
         foreach (Tile tile in tiles) {
             if (Mathf.Abs(transform.position.x - tile.transform.position.x) + Mathf.Abs(transform.position.y - tile.transform.position.y) <= tileSpeed)
@@ -136,6 +146,7 @@ public class Unit : MonoBehaviour
         }
     }
 
+    //Al seleccionar la unidad, se muestran los enemigos atacables
     void GetEnemies() {
     
         enemiesInRange.Clear();
@@ -154,12 +165,14 @@ public class Unit : MonoBehaviour
         }
     }
 
+    //Al seleccionar el tile, el personaje irá hacia él
     public void Move(Transform movePos)
     {
         gm.ResetTiles();
         StartCoroutine(StartMovement(movePos));
     }
 
+    // La unidad seleccionada por GM ataca a la seleccionada en OnMouseDown (enemy)
     void Attack(Unit enemy) {
         hasAttacked = true;
 
@@ -238,6 +251,7 @@ public class Unit : MonoBehaviour
 
     }
 
+    // Desactivar el icono de atacar
     public void ResetWeaponIcon() {
         Unit[] enemies = FindObjectsOfType<Unit>();
         foreach (Unit enemy in enemies)
@@ -248,7 +262,7 @@ public class Unit : MonoBehaviour
 
     IEnumerator StartMovement(Transform movePos) { // Moves the character to his new position.
 
-
+        
         while (transform.position.x != movePos.position.x) { // first aligns him with the new tile's x pos
             transform.position = Vector2.MoveTowards(transform.position, new Vector2(movePos.position.x, transform.position.y), moveSpeed * Time.deltaTime);
             yield return null;
