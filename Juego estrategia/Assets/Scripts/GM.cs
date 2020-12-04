@@ -45,6 +45,12 @@ public class GM : MonoBehaviour
 		source = GetComponent<AudioSource>();
         camAnim = Camera.main.GetComponent<Animator>();
         GetGoldIncome(1);
+
+        Unit[] unidades = FindObjectsOfType<Unit>();
+        foreach (Unit unidad in unidades) 
+        {
+            
+        }
     }
 
     private void Update()

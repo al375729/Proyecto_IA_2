@@ -20,6 +20,8 @@ public class Tile : MonoBehaviour
 
 	private AudioSource source;
 
+    //Per als mapes d'influencia
+
     private void Start()
     {
 		source = GetComponent<AudioSource>();

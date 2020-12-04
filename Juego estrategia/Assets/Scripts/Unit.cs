@@ -44,7 +44,10 @@ public class Unit : MonoBehaviour
 
 	private AudioSource source;
 
-    public Text displayedText; 
+    public Text displayedText;
+
+    //Para los mapas de influencia
+    public string tipoUnidad; 
 
     private void Start()
     {
@@ -52,6 +55,19 @@ public class Unit : MonoBehaviour
 		camAnim = Camera.main.GetComponent<Animator>();
         gm = FindObjectOfType<GM>();
         UpdateHealthDisplay();
+
+        //Pintar influencias iniciales
+        PintarInfluencia(true);
+
+    }
+
+    private void PintarInfluencia(bool signo)
+    {   
+        Debug.Log("Pintar Influencia");
+
+        InfluTile[] tiles = FindObjectsOfType<InfluTile>();
+        foreach (InfluTile tile in tiles) 
+            tile.PintarInfluencia(this, signo);
     }
 
     //Cambiar los números de la vida del rey
@@ -169,6 +185,7 @@ public class Unit : MonoBehaviour
     public void Move(Transform movePos)
     {
         gm.ResetTiles();
+        PintarInfluencia(false);
         StartCoroutine(StartMovement(movePos));
     }
 
@@ -274,6 +291,7 @@ public class Unit : MonoBehaviour
         }
 
         hasMoved = true;
+        PintarInfluencia(true);
         ResetWeaponIcon();
         GetEnemies();
         gm.MoveInfoPanel(this);

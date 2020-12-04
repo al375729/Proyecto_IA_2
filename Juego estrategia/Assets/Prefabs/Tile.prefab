@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7303139465636383203}
   - component: {fileID: 8977500355057204398}
   - component: {fileID: 3588344972070875810}
-  - component: {fileID: 8976769020611957772}
+  - component: {fileID: 4212180180010835313}
   m_Layer: 0
   m_Name: Tile
   m_TagString: Untagged
@@ -47,6 +47,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -108,7 +110,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &8976769020611957772
+--- !u!114 &4212180180010835313
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -117,7 +119,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 7677967910336022200}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f66289054ac3548bd96027705bcc6dec, type: 3}
+  m_Script: {fileID: 11500000, guid: 9888844bd112af74b9db9e9ae54bf78d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  highlightColor: {r: 0.2264151, g: 0.2264151, b: 0.2264151, a: 1}
+  jugRey: 0
+  jugCaballero: 0
+  jugArquero: 0
+  jugDragon: 0
+  jugAldea: 0
+  iaRey: 0
+  iaCaballero: 0
+  iaArquero: 0
+  iaDragon: 0
+  iaAldea: 0
