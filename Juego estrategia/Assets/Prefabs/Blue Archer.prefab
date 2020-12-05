@@ -596,6 +596,7 @@ GameObject:
   - component: {fileID: 626269173632994739}
   - component: {fileID: 626269173632994738}
   - component: {fileID: 1547342092}
+  - component: {fileID: 732670307497512144}
   m_Layer: 9
   m_Name: Blue Archer
   m_TagString: Archer
@@ -809,6 +810,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &732670307497512144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 626269173632994743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd5163b0caf38b74189d19b21ebf862d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &626269174062472869
 GameObject:
   m_ObjectHideFlags: 0

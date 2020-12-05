@@ -47,7 +47,10 @@ public class Unit : MonoBehaviour
     public Text displayedText;
 
     //Para los mapas de influencia
-    public string tipoUnidad; 
+    public string tipoUnidad;
+
+    //Para que la IA lo maneje según una estrategia
+    public IA_UnitControl unitControl; 
 
     private void Start()
     {
@@ -55,6 +58,10 @@ public class Unit : MonoBehaviour
 		camAnim = Camera.main.GetComponent<Animator>();
         gm = FindObjectOfType<GM>();
         UpdateHealthDisplay();
+        
+        //Si es una unidad del bando de la IA, conectar con su IA_UnitControl
+        if(playerNumber==2)
+            unitControl = GetComponent<IA_UnitControl>();
 
         //Pintar influencias iniciales
         PintarInfluencia(true);
@@ -110,6 +117,9 @@ public class Unit : MonoBehaviour
 				
                 GetWalkableTiles();
                 GetEnemies();
+
+                if(playerNumber == 2)
+                    Debug.Log(unitControl.nombreObjetivo);
             }
 
         }

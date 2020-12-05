@@ -40,17 +40,16 @@ public class GM : MonoBehaviour
 
 	private AudioSource source;
 
+    //Para las decisiones de la IA
+    private IAPlayer iaPlayer;
+
     private void Start()
     {
 		source = GetComponent<AudioSource>();
         camAnim = Camera.main.GetComponent<Animator>();
         GetGoldIncome(1);
 
-        Unit[] unidades = FindObjectsOfType<Unit>();
-        foreach (Unit unidad in unidades) 
-        {
-            
-        }
+        iaPlayer = GetComponent<IAPlayer>();
     }
 
     private void Update()
@@ -150,9 +149,11 @@ public class GM : MonoBehaviour
         if (playerTurn == 1) {
             playerIcon.sprite = playerTwoIcon;
             playerTurn = 2;
+
+            iaPlayer.TurnoIA();
         } else if (playerTurn == 2) {
             playerIcon.sprite = playerOneIcon;
-            playerTurn = 1;
+            playerTurn = 1;    
         }
 
         GetGoldIncome(playerTurn);
