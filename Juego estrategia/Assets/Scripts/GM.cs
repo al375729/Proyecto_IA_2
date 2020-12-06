@@ -43,13 +43,55 @@ public class GM : MonoBehaviour
     //Para las decisiones de la IA
     private IAPlayer iaPlayer;
 
-    private void Start()
+    //Vector 2D para almacenar Tiles y acceder a ellos de manera
+    //más eficiente
+    public Tile[,] matrizTile;
+
+    private void Awake()
     {
 		source = GetComponent<AudioSource>();
         camAnim = Camera.main.GetComponent<Animator>();
         GetGoldIncome(1);
 
         iaPlayer = GetComponent<IAPlayer>();
+        ObtenerTilesParaMatriz();
+    
+    }
+
+    private void ObtenerTilesParaMatriz()
+    {
+        Tile[] arrayTile = FindObjectsOfType<Tile>();
+        List<float> coordenadasX = new List<float>();
+        List<float> coordenadasY = new List<float>();
+
+        //Obtener todas las posibles coordenadas x e y de los tiles
+        //para definir el número de filas y columnas de la matriz
+        foreach(Tile tilo in arrayTile)
+        {
+            if(!coordenadasX.Contains(tilo.transform.position.x))
+                coordenadasX.Add(tilo.transform.position.x);
+            if(!coordenadasY.Contains(tilo.transform.position.y))
+                coordenadasY.Add(tilo.transform.position.y);
+        }
+
+        //Sort para ordenar las listas recientemente creadas
+        coordenadasX.Sort();
+        coordenadasY.Sort();
+        
+        //Inicializar matriz y colocar Tiles en ella
+        matrizTile = new Tile[coordenadasX.Count, coordenadasY.Count];
+        foreach(Tile tilo in arrayTile)
+        {
+            //IndexOf para encontrar la primera posición del float deseado
+            int i = coordenadasX.IndexOf(tilo.transform.position.x);
+            int j = coordenadasY.IndexOf(tilo.transform.position.y);
+
+            matrizTile[i,j] = tilo;
+            //Para que el tile se pueda autoidentificar
+            tilo.matrizX = i;
+            tilo.matrizY = j;
+        }
+
     }
 
     private void Update()

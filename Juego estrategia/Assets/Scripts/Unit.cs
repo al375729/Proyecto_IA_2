@@ -52,6 +52,8 @@ public class Unit : MonoBehaviour
     //Para que la IA lo maneje según una estrategia
     public IA_UnitControl unitControl; 
 
+    public Tile tilePosicion;
+
     private void Start()
     {
 		source = GetComponent<AudioSource>();
@@ -63,18 +65,49 @@ public class Unit : MonoBehaviour
         if(playerNumber==2)
             unitControl = GetComponent<IA_UnitControl>();
 
+        
+
+        //Encontrar Tile sobre el que está
+        if(tilePosicion == null)
+        {
+            Tile [] todos = FindObjectsOfType<Tile>();
+            foreach(Tile tilo in todos)
+            {
+                if(tilo.transform.position.x == transform.position.x && tilo.transform.position.y == transform.position.y)
+                {
+                    tilePosicion = tilo;
+                    break;
+                }
+            }
+        }
+
         //Pintar influencias iniciales
         PintarInfluencia(true);
-
     }
 
     private void PintarInfluencia(bool signo)
     {   
         Debug.Log("Pintar Influencia");
-
+        /*
         InfluTile[] tiles = FindObjectsOfType<InfluTile>();
         foreach (InfluTile tile in tiles) 
             tile.PintarInfluencia(this, signo);
+        */
+
+        //Obtindre quantitat parcial de la matriu de tiles del GM
+        //segons el tile on s'està i el tileSpeed
+        
+        int iniX = tilePosicion.matrizX - tileSpeed;
+        int finX = tilePosicion.matrizX + tileSpeed;
+        int iniY = tilePosicion.matrizY - tileSpeed;
+        int finY = tilePosicion.matrizY + tileSpeed;
+
+        for(int i = iniX; i <= finX; i++)
+            for(int j = iniY; j <= finY; j++)
+                //if(gm.matrizTile[i,j]!=null)  
+                if(i>=0 && i<gm.matrizTile.GetLength(0) && j>=0 && j<gm.matrizTile.GetLength(1))  
+                    gm.matrizTile[i,j].influTile.PintarInfluencia(this,signo);
+
     }
 
     //Cambiar los números de la vida del rey
@@ -159,7 +192,7 @@ public class Unit : MonoBehaviour
 
         //Guardar en un vector todos los tiles en la partida 
         //(se obtinenen con FindObjectsOfType<Tile>())
-        Tile[] tiles = FindObjectsOfType<Tile>();
+        /*Tile[] tiles = FindObjectsOfType<Tile>();
         foreach (Tile tile in tiles) {
             if (Mathf.Abs(transform.position.x - tile.transform.position.x) + Mathf.Abs(transform.position.y - tile.transform.position.y) <= tileSpeed)
             { // how far he can move
@@ -169,7 +202,28 @@ public class Unit : MonoBehaviour
                 }
 
             }          
-        }
+        }*/
+        int iniX = tilePosicion.matrizX - tileSpeed;
+        int finX = tilePosicion.matrizX + tileSpeed;
+        int iniY = tilePosicion.matrizY - tileSpeed;
+        int finY = tilePosicion.matrizY + tileSpeed;
+
+        for(int i = iniX; i <= finX; i++)
+            for(int j = iniY; j <= finY; j++)
+                //if(gm.matrizTile[i,j]!=null)  
+                if(i>=0 && i<gm.matrizTile.GetLength(0) && j>=0 && j<gm.matrizTile.GetLength(1))
+                {  
+                    Tile tile = gm.matrizTile[i,j];
+                    if (Mathf.Abs(transform.position.x - tile.transform.position.x) + Mathf.Abs(transform.position.y - tile.transform.position.y) <= tileSpeed)
+                    { // how far he can move
+                        if (tile.isClear() == true)
+                        { // is the tile clear from any obstacles
+                            tile.Highlight();
+                        }
+                    }
+                
+                }
+
     }
 
     //Al seleccionar la unidad, se muestran los enemigos atacables

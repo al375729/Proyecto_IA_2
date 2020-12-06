@@ -21,12 +21,18 @@ public class Tile : MonoBehaviour
 	private AudioSource source;
 
     //Per als mapes d'influencia
+    public InfluTile influTile;
 
-    private void Start()
+    //Per a identificar-se en la matriu de tiles
+    public int matrizX;
+    public int matrizY;
+
+    private void Awake()
     {
 		source = GetComponent<AudioSource>();
         gm = FindObjectOfType<GM>();
         rend = GetComponent<SpriteRenderer>();
+        influTile = GetComponent<InfluTile>();
 
     }
 
