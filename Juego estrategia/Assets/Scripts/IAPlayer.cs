@@ -9,6 +9,11 @@ public class IAPlayer : MonoBehaviour
 
     List<IA_UnitControl> unidades;
 
+    public IA_UnitControl unidadActual;
+
+    //Cantidad de influencia que tiene que recibir el rey de las unidades enemigas
+    public float minSumaInfluenciaAliada = 3f;
+
     void Start()
     {
         EstrategiaIA = "Neutral";
@@ -26,17 +31,52 @@ public class IAPlayer : MonoBehaviour
         Debug.Log("Turno de la IA");
         //Recoger todas las unidades del juego y trabajar sólo con
         foreach(IA_UnitControl unidad in unidades)
-            EstrategiaUnidad(unidad);
+        {
+            unidadActual = unidad;
+            EstrategiaUnidad();
+        }
 
 
     }
 
-    public void EstrategiaUnidad(IA_UnitControl unidad)
+    public void EstrategiaUnidad()
     {
         //Si no tiene una estrategia, asignarle una según el estado actual
-        if(unidad.nombreObjetivo == "")
+        if(unidadActual.nombreObjetivo == "")
+            DecidirEstrategiaUnidad();
+
+        //Caso de la unidad rey: "Quiero_Protegerme"
+        //      Comprobar la suma de influencias de unidades aliadas que recibe 
+        //      el tile sobre el cual está
+        //      Si no es suficiente: 
+        //          buscar tile alcanzable con mayor suma de influencia
+        //          Si sigue sin ser suficiente, mantener "Quiero_Protegerme"
+        //      Si es suficiente:
+        //          cambiar nombreObjetivo a "Estoy_Protegido"
+        //
+        //Caso de la unidad rey: "Estoy_Protegido"
+        //      Comprobar la suma de influencias de unidades aliadas que recibe 
+        //      el tile sobre el cual está
+        //      Si no es suficiente:
+        //          Cambiar nombreObjetivo a "Quiero_Protegerme" y moverte como tal
+        //      Si es suficiente:
+        //          Si hay un enemigo atacándote: ataca
+        //          No moverse del sitio
+        
+        if(unidadActual.nombreObjetivo == "Quiero_Protegerme")
         {
-            //EstrategiaIA por defecto: Neutral
+            float influenciaActual = unidadActual.unit.tilePosicion.influTile.getSumaInfluenciaAliada();
+            if(influenciaActual < minSumaInfluenciaAliada)
+            {
+                //buscar tile alcanzable con mayor suma de influencia
+                Tile ir_a_tile = unidadActual.unit.MaximaInfluenciaAlcanzable(); 
+            }
+        }
+    }
+
+    private void DecidirEstrategiaUnidad()
+    {
+        //EstrategiaIA por defecto: Neutral
             // Quiero_Protegerme
             //      Decidir si: la unidad es el rey IA
             // Quiero_DefenderRey
@@ -49,7 +89,7 @@ public class IAPlayer : MonoBehaviour
             //      Decidir si: el rey enemigo es el elemento más cercano
 
 
-            if(!unidad.esRey)
+            if(!unidadActual.esRey)
             {
                 Debug.Log("Fijar nueva estrategia");
 
@@ -64,8 +104,8 @@ public class IAPlayer : MonoBehaviour
 
                 foreach(Unit este in todos)
                 {
-                    distancia = Mathf.Abs(unidad.transform.position.x - este.transform.position.x) 
-                        + Mathf.Abs(unidad.transform.position.y - este.transform.position.y);
+                    distancia = Mathf.Abs(unidadActual.transform.position.x - este.transform.position.x) 
+                        + Mathf.Abs(unidadActual.transform.position.y - este.transform.position.y);
                     //Distancia hasta rey jugador
                     if(este.playerNumber == 2 && este.isKing)
                         distanciaReyIa = distancia;
@@ -80,16 +120,12 @@ public class IAPlayer : MonoBehaviour
 
                 float maxDistancia = Mathf.Min(distanciaReyIa, Mathf.Min(distanciaEnemigoMasCercano,distanciaReyJug));
 
-                if(maxDistancia == distanciaReyIa)          unidad.nombreObjetivo = "Quiero_DefenderRey";
-                else if(maxDistancia == distanciaReyJug)    unidad.nombreObjetivo = "Quiero_AtacarRey";
-                else                                        unidad.nombreObjetivo = "Quiero_AtacarEnemigos";
+                if(maxDistancia == distanciaReyIa)          unidadActual.nombreObjetivo = "Quiero_DefenderRey";
+                else if(maxDistancia == distanciaReyJug)    unidadActual.nombreObjetivo = "Quiero_AtacarRey";
+                else                                        unidadActual.nombreObjetivo = "Quiero_AtacarEnemigos";
             }
             else
-                unidad.nombreObjetivo = "Quiero_Protegerme";
-
-            
-        }
-
+                unidadActual.nombreObjetivo = "Quiero_Protegerme";
 
     }
 }

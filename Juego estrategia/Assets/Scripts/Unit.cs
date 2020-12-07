@@ -110,6 +110,35 @@ public class Unit : MonoBehaviour
 
     }
 
+    public Tile MaximaInfluenciaAlcanzable()
+    {
+        int iniX = tilePosicion.matrizX - tileSpeed;
+        int finX = tilePosicion.matrizX + tileSpeed;
+        int iniY = tilePosicion.matrizY - tileSpeed;
+        int finY = tilePosicion.matrizY + tileSpeed;
+
+        Tile maxInflu = gm.matrizTile[iniX, iniY];
+
+        for(int i = iniX; i <= finX; i++)
+            for(int j = iniY; j <= finY; j++) 
+                //Se recoge un tile de la matriz (no se sale de ésta) 
+                if(i>=0 && i<gm.matrizTile.GetLength(0) && j>=0 && j<gm.matrizTile.GetLength(1))
+                {
+                    Tile tile = gm.matrizTile[i,j];
+                    //El tile tiene que ser alcanzable
+                    if (Mathf.Abs(transform.position.x - tile.transform.position.x) + Mathf.Abs(transform.position.y - tile.transform.position.y) <= tileSpeed)
+                    { // Si no está ocupado
+                        if (tile.isClear() == true)
+                        { // is the tile clear from any obstacles
+                            if(tile.influTile.getSumaInfluenciaAliada() > maxInflu.influTile.getSumaInfluenciaAliada())
+                                maxInflu = tile;
+                        }
+                    }
+                }
+
+        return maxInflu;
+    }
+
     //Cambiar los números de la vida del rey
     private void UpdateHealthDisplay ()
     {

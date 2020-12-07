@@ -13,7 +13,7 @@ public class InfluTile : MonoBehaviour
     public float jugDragon;
     public float jugAldea;
 
-    //Las influencias de la IA  (Player Number: 1)
+    //Las influencias de la IA  (Player Number: 2)
     public float iaRey;
     public float iaCaballero;
     public float iaArquero;
@@ -59,5 +59,26 @@ public class InfluTile : MonoBehaviour
                 case "dragon":      iaDragon += cantidad; break;
             }
 
+    }
+
+    //Cuando IAPlayer pida la suma de las influencias en la casilla
+    public float getSumaInfluenciaAliada()
+    {
+        return iaArquero + iaCaballero + iaDragon;
+    }
+
+    public float getInfluenciaReyAliado()
+    {
+        return iaRey;
+    }
+
+    public float getSumaInfluenciaEnemiga()
+    {
+        return jugArquero + jugCaballero + jugDragon;
+    }
+
+    public float getInfluenciaReyEnemigo()
+    {
+        return jugRey;
     }
 }

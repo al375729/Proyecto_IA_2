@@ -5,7 +5,7 @@ using UnityEngine;
 public class IA_UnitControl : MonoBehaviour
 {
     
-    Unit unit;
+    public Unit unit;
     public string nombreObjetivo;
     public bool esRey;
     public Tile objetivo;
