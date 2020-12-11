@@ -73,12 +73,18 @@ public class Tile : MonoBehaviour
         //pulsamos en uno de éstos para que vaya hacia él
         if (isWalkable == true) {
             gm.selectedUnit.Move(this.transform);
+
+            //Para cuando se quiera spawnear una unidad ya seleccionada del menú
         } else if (isCreatable == true && gm.createdUnit != null) {
             Unit unit = Instantiate(gm.createdUnit, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
+            //Nada más añadirlo, se pinta el mapa de influencia
+            unit.PintarInfluencia(true);
             unit.hasMoved = true;
             unit.hasAttacked = true;
             gm.ResetTiles();
             gm.createdUnit = null;
+
+            //Para cua
         } else if (isCreatable == true && gm.createdVillage != null) {
             Instantiate(gm.createdVillage, new Vector3(transform.position.x, transform.position.y, 0) , Quaternion.identity);
             gm.ResetTiles();

@@ -63,14 +63,27 @@ public class IAPlayer : MonoBehaviour
         //          Si hay un enemigo atacándote: ataca
         //          No moverse del sitio
         
-        if(unidadActual.nombreObjetivo == "Quiero_Protegerme")
+        //if(unidadActual.nombreObjetivo == "Quiero_Protegerme")
+        if(unidadActual.unit.tipoUnidad =="rey")
         {
+            //Comprobar la suma de influencias de unidades aliadas que recibe 
             float influenciaActual = unidadActual.unit.tilePosicion.influTile.getSumaInfluenciaAliada();
             if(influenciaActual < minSumaInfluenciaAliada)
             {
+                unidadActual.nombreObjetivo = "Quiero_Protegerme";
                 //buscar tile alcanzable con mayor suma de influencia
                 Tile ir_a_tile = unidadActual.unit.MaximaInfluenciaAlcanzable(); 
+                //(Posible de cambiar cuando se implemente el PathFinding)
+                unidadActual.unit.Move(ir_a_tile.transform);
+                //Si sigue sin ser suficiente, mantener "Quiero_Protegerme"
+                influenciaActual = ir_a_tile.influTile.getSumaInfluenciaAliada();
+                if(influenciaActual >= minSumaInfluenciaAliada)
+                    unidadActual.nombreObjetivo = "Estoy_Protegido";
             }
+        }
+        else
+        {
+            
         }
     }
 

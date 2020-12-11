@@ -85,7 +85,7 @@ public class Unit : MonoBehaviour
         PintarInfluencia(true);
     }
 
-    private void PintarInfluencia(bool signo)
+    public void PintarInfluencia(bool signo)
     {   
         Debug.Log("Pintar Influencia");
         /*
@@ -353,6 +353,7 @@ public class Unit : MonoBehaviour
 
             gm.ResetTiles(); // reset tiles when we die
             gm.RemoveInfoPanel(this);
+            PintarInfluencia(false);
             Destroy(gameObject);
         }
 
