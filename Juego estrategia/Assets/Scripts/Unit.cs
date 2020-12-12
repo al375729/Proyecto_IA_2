@@ -282,6 +282,62 @@ public class Unit : MonoBehaviour
         StartCoroutine(StartMovement(movePos));
     }
 
+    //Comprueba cada tile hacia el cual puede moverse si desde éste puede atacar
+    // a un enemigo(según su attackRadius)
+    // si más de un tile cumple esa función, se obtiene el más cercano, incluso
+    // si es el tilePosición actual
+    private bool EnemigosAlcanzables()
+    {
+        Unit[] enemies = FindObjectsOfType<Unit>();
+        foreach (Unit enemy in enemies)
+        {
+            if (Mathf.Abs(transform.position.x - enemy.transform.position.x) + Mathf.Abs(transform.position.y - enemy.transform.position.y) <= attackRadius) // check is the enemy is near enough to attack
+            {
+                if (enemy.playerNumber != gm.playerTurn)
+                    return true;
+            }
+        }
+
+        return false;
+    }
+    public Tile ComprobarEnemigoAlcanzable()
+    {
+        Tile tile_atacar = null;
+
+        //Algoritmo de búsqueda de tiles alcanzables
+        int iniX = tilePosicion.matrizX - tileSpeed;
+        int finX = tilePosicion.matrizX + tileSpeed;
+        int iniY = tilePosicion.matrizY - tileSpeed;
+        int finY = tilePosicion.matrizY + tileSpeed;
+
+        for(int i = iniX; i <= finX; i++)
+            for(int j = iniY; j <= finY; j++)
+                //if(gm.matrizTile[i,j]!=null)  
+                if(i>=0 && i<gm.matrizTile.GetLength(0) && j>=0 && j<gm.matrizTile.GetLength(1))
+                {  
+                    Tile tile = gm.matrizTile[i,j];
+                    if (Mathf.Abs(transform.position.x - tile.transform.position.x) + Mathf.Abs(transform.position.y - tile.transform.position.y) <= tileSpeed)
+                    { // how far he can move
+                        if (tile.isClear() == true)
+                        { // is the tile clear from any obstacles
+                          // desde este tile, comprobar si hay un enemigo alcanzable
+                          if(EnemigosAlcanzables())
+                          {
+                              // si más de un tile cumple esa función, se obtiene el más cercano, incluso
+                              // si es el tilePosición actual
+                              if(tile_atacar==null || 
+                              Mathf.Abs(transform.position.x - tile.transform.position.x) + Mathf.Abs(transform.position.y - tile.transform.position.y) <=
+                              Mathf.Abs(transform.position.x - tile_atacar.transform.position.x) + Mathf.Abs(transform.position.y - tile_atacar.transform.position.y)) 
+                                tile_atacar = tile;
+                          }
+                        }
+                    }
+                
+                }
+
+        return tile_atacar;
+    }
+
     // La unidad seleccionada por GM ataca a la seleccionada en OnMouseDown (enemy)
     void Attack(Unit enemy) {
         hasAttacked = true;
@@ -333,6 +389,9 @@ public class Unit : MonoBehaviour
             }
 
             GetWalkableTiles(); // check for new walkable tiles (if enemy has died we can now walk on his tile)
+            //Si el enemigo era de la IA, se ha de borrar de la lista del IAPlayer
+            if(enemy.playerNumber==2)
+                gm.UnidadIAEliminada(enemy);
             gm.RemoveInfoPanel(enemy);
             Destroy(enemy.gameObject);
         }

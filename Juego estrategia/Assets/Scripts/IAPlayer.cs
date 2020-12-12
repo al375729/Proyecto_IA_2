@@ -7,7 +7,9 @@ public class IAPlayer : MonoBehaviour
     
     public string EstrategiaIA;
 
-    List<IA_UnitControl> unidades;
+    public List<IA_UnitControl> unidades;
+    int posJugRey;
+    int posIaRey;
 
     public IA_UnitControl unidadActual;
 
@@ -21,8 +23,15 @@ public class IAPlayer : MonoBehaviour
         //Recoger todas las unidades en el inicio
         unidades = new List<IA_UnitControl>();
         IA_UnitControl[] todos = FindObjectsOfType<IA_UnitControl>();
-        foreach(IA_UnitControl unidad in todos) 
-            unidades.Add(unidad);
+        //foreach(IA_UnitControl unidad in todos) 
+        for(int i=0; i<todos.Length; i++)
+        {
+            unidades.Add(todos[i]);
+            if(unidades[i].unit.tipoUnidad=="rey" && unidades[i].unit.playerNumber==1)
+                posJugRey = i;
+            else if(unidades[i].unit.tipoUnidad=="rey" && unidades[i].unit.playerNumber==2)
+                posIaRey = i;
+        }
         //Falta que se recoja cada unidad spawneada durante la partida
     }
 
@@ -30,11 +39,12 @@ public class IAPlayer : MonoBehaviour
     {
         Debug.Log("Turno de la IA");
         //Recoger todas las unidades del juego y trabajar sólo con
-        foreach(IA_UnitControl unidad in unidades)
-        {
-            unidadActual = unidad;
-            EstrategiaUnidad();
-        }
+        for(int i = 0; i<unidades.Count; i++)
+            if(unidades[i]!=null)
+            {
+                unidadActual = unidades[i];
+                EstrategiaUnidad();
+            }
 
 
     }
@@ -68,10 +78,13 @@ public class IAPlayer : MonoBehaviour
         {
             //Comprobar la suma de influencias de unidades aliadas que recibe 
             float influenciaActual = unidadActual.unit.tilePosicion.influTile.getSumaInfluenciaAliada();
+            Debug.Log(  "Rey IA\n"+
+                        "Influencia del tile actual:"+influenciaActual);
             if(influenciaActual < minSumaInfluenciaAliada)
             {
                 unidadActual.nombreObjetivo = "Quiero_Protegerme";
                 //buscar tile alcanzable con mayor suma de influencia
+                //(Posible de cambiar ir_a_tile por unidadActual.objetivo)
                 Tile ir_a_tile = unidadActual.unit.MaximaInfluenciaAlcanzable(); 
                 //(Posible de cambiar cuando se implemente el PathFinding)
                 unidadActual.unit.Move(ir_a_tile.transform);
@@ -83,9 +96,44 @@ public class IAPlayer : MonoBehaviour
         }
         else
         {
-            
+            // Caso: Quiero_DefenderRey y Estoy_DefendiendoRey"
+            //      Comprobar si el rey está en "Estoy_Protegido"
+            //          Si lo está: comprobar si estamos cerca o lejos del rey
+            //              Si estamos lejos: decidir otra estrategia y moverse según esta
+            //              Si estamos cerca: mantener o cambiar a "Estoy_DefendiendoRey" 
+            //              y no moverse a no ser que haya un enemigo cerca del rey
+            //          Si el rey está en "Quiero_Protegerme": avanzar para situarse cerca del rey
+            if(unidadActual.nombreObjetivo=="Quiero_DefenderRey" || unidadActual.nombreObjetivo=="Estoy_DefendiendoRey")
+            {
+                if(unidades[posIaRey].nombreObjetivo=="Estoy_Protegido")
+                {
+                    if(unidadActual.unit.tilePosicion.influTile.iaRey<1)
+                        DecidirEstrategiaUnidad();
+                    else
+                    {
+                        //Comprobar si hay enemigos cerca
+                        //Si los hay: moverse hacia el más cercano y atacarle
+                        //Si no los hay: quedarse en el sitio y no moverse
+                        Tile tilo = unidadActual.unit.ComprobarEnemigoAlcanzable();
+                        if(tilo!=null)
+                        {
+                            Debug.Log("Decision del "+unidadActual.unit.tipoUnidad+": Atacar enemigo cercano");
+                            unidadActual.unit.Move(tilo.transform);
+                            //Atacar enemigo
+                        }
+                        else
+                            Debug.Log("Decision del "+unidadActual.unit.tipoUnidad+": Quedarme quieto");
+                    }
+                }
+                else
+                {
+                    
+                }
+            }
         }
     }
+
+
 
     private void DecidirEstrategiaUnidad()
     {
@@ -104,7 +152,7 @@ public class IAPlayer : MonoBehaviour
 
             if(!unidadActual.esRey)
             {
-                Debug.Log("Fijar nueva estrategia");
+                Debug.Log("Fijar nueva estrategia para "+unidadActual.unit.tipoUnidad);
 
                 float distanciaReyIa = float.PositiveInfinity;
                 float distanciaEnemigoMasCercano = float.PositiveInfinity;
@@ -136,6 +184,8 @@ public class IAPlayer : MonoBehaviour
                 if(maxDistancia == distanciaReyIa)          unidadActual.nombreObjetivo = "Quiero_DefenderRey";
                 else if(maxDistancia == distanciaReyJug)    unidadActual.nombreObjetivo = "Quiero_AtacarRey";
                 else                                        unidadActual.nombreObjetivo = "Quiero_AtacarEnemigos";
+
+                Debug.Log("Estrategia para "+unidadActual.unit.tipoUnidad+": "+unidadActual.nombreObjetivo);
             }
             else
                 unidadActual.nombreObjetivo = "Quiero_Protegerme";
