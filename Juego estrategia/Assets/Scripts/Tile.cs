@@ -80,7 +80,6 @@ public class Tile : MonoBehaviour
             //Nada más añadirlo, se pinta el mapa de influencia
             unit.PintarInfluencia(true);
             //Si es una unidad de la IA, se añade a la lista del IAPlayer
-            if(unit.playerNumber==2)    gm.UnidadIACreada(unit);
             unit.hasMoved = true;
             unit.hasAttacked = true;
             gm.ResetTiles();

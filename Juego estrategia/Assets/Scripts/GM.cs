@@ -243,13 +243,6 @@ public class GM : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    public void UnidadIAEliminada(Unit unidad)    {
-        iaPlayer.unidades.Remove(unidad.unitControl);
-    }
-
-    public void UnidadIACreada(Unit unidad) {
-        iaPlayer.unidades.Add(unidad.unitControl);
-    }
 
 
 }

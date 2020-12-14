@@ -87,7 +87,7 @@ public class Unit : MonoBehaviour
 
     public void PintarInfluencia(bool signo)
     {   
-        Debug.Log("Pintar Influencia");
+        Debug.Log(tipoUnidad +" de jugador "+playerNumber+" va a Pintar Influencia");
         /*
         InfluTile[] tiles = FindObjectsOfType<InfluTile>();
         foreach (InfluTile tile in tiles) 
@@ -338,6 +338,42 @@ public class Unit : MonoBehaviour
         return tile_atacar;
     }
 
+    public Tile ComprobarReyAliadoAlcanzable()
+    {
+        Tile tile_proteger = null;
+        float influReyMax = 0f;
+
+        //Algoritmo de búsqueda de tiles alcanzables
+        int iniX = tilePosicion.matrizX - tileSpeed;
+        int finX = tilePosicion.matrizX + tileSpeed;
+        int iniY = tilePosicion.matrizY - tileSpeed;
+        int finY = tilePosicion.matrizY + tileSpeed;
+
+        for(int i = iniX; i <= finX; i++)
+            for(int j = iniY; j <= finY; j++)
+                //if(gm.matrizTile[i,j]!=null)  
+                if(i>=0 && i<gm.matrizTile.GetLength(0) && j>=0 && j<gm.matrizTile.GetLength(1))
+                {  
+                    Tile tile = gm.matrizTile[i,j];
+                    if (Mathf.Abs(transform.position.x - tile.transform.position.x) + Mathf.Abs(transform.position.y - tile.transform.position.y) <= tileSpeed)
+                    { // how far he can move
+                        if (tile.isClear() == true)
+                        { // is the tile clear from any obstacles
+                          // desde este tile, comprobar si hay un enemigo alcanzable
+                          float influRey = tile.influTile.getInfluenciaReyAliado();
+                          if(influRey!=Mathf.Infinity && influRey > influReyMax)
+                          {
+                              tile_proteger = tile;
+                              influReyMax = influRey;
+                          }
+                        }
+                    }
+                
+                }
+
+        return tile_proteger;
+    }
+
     // La unidad seleccionada por GM ataca a la seleccionada en OnMouseDown (enemy)
     void Attack(Unit enemy) {
         hasAttacked = true;
@@ -390,8 +426,7 @@ public class Unit : MonoBehaviour
 
             GetWalkableTiles(); // check for new walkable tiles (if enemy has died we can now walk on his tile)
             //Si el enemigo era de la IA, se ha de borrar de la lista del IAPlayer
-            if(enemy.playerNumber==2)
-                gm.UnidadIAEliminada(enemy);
+            enemy.PintarInfluencia(false);
             gm.RemoveInfoPanel(enemy);
             Destroy(enemy.gameObject);
         }

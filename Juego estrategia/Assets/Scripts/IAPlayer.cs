@@ -7,9 +7,9 @@ public class IAPlayer : MonoBehaviour
     
     public string EstrategiaIA;
 
-    public List<IA_UnitControl> unidades;
-    int posJugRey;
-    int posIaRey;
+    IA_UnitControl[] todos;
+    IA_UnitControl posJugRey;
+    IA_UnitControl posIaRey;
 
     public IA_UnitControl unidadActual;
 
@@ -21,16 +21,14 @@ public class IAPlayer : MonoBehaviour
         EstrategiaIA = "Neutral";
 
         //Recoger todas las unidades en el inicio
-        unidades = new List<IA_UnitControl>();
-        IA_UnitControl[] todos = FindObjectsOfType<IA_UnitControl>();
+        todos = FindObjectsOfType<IA_UnitControl>();
         //foreach(IA_UnitControl unidad in todos) 
         for(int i=0; i<todos.Length; i++)
         {
-            unidades.Add(todos[i]);
-            if(unidades[i].unit.tipoUnidad=="rey" && unidades[i].unit.playerNumber==1)
-                posJugRey = i;
-            else if(unidades[i].unit.tipoUnidad=="rey" && unidades[i].unit.playerNumber==2)
-                posIaRey = i;
+            if(todos[i].unit.tipoUnidad=="rey" && todos[i].unit.playerNumber==1)
+                posJugRey = todos[i];
+            else if(todos[i].unit.tipoUnidad=="rey" && todos[i].unit.playerNumber==2)
+                posIaRey = todos[i];
         }
         //Falta que se recoja cada unidad spawneada durante la partida
     }
@@ -39,22 +37,26 @@ public class IAPlayer : MonoBehaviour
     {
         Debug.Log("Turno de la IA");
         //Recoger todas las unidades del juego y trabajar sólo con
-        for(int i = 0; i<unidades.Count; i++)
-            if(unidades[i]!=null)
+        todos = FindObjectsOfType<IA_UnitControl>();
+        for(int i = 0; i<todos.Length; i++)
+            if(todos[i]!=null)
             {
-                unidadActual = unidades[i];
-                EstrategiaUnidad();
+                unidadActual = todos[i];
+                //Si no tiene una estrategia, asignarle una según el estado actual
+                if(unidadActual.nombreObjetivo == "")
+                    DecidirEstrategiaUnidad();
+                
+                if(unidadActual == posIaRey)
+                    EstrategiaRey();
+                else
+                    EstrategiaUnidad();
             }
 
 
     }
 
-    public void EstrategiaUnidad()
+    public void EstrategiaRey()
     {
-        //Si no tiene una estrategia, asignarle una según el estado actual
-        if(unidadActual.nombreObjetivo == "")
-            DecidirEstrategiaUnidad();
-
         //Caso de la unidad rey: "Quiero_Protegerme"
         //      Comprobar la suma de influencias de unidades aliadas que recibe 
         //      el tile sobre el cual está
@@ -73,64 +75,81 @@ public class IAPlayer : MonoBehaviour
         //          Si hay un enemigo atacándote: ataca
         //          No moverse del sitio
         
-        //if(unidadActual.nombreObjetivo == "Quiero_Protegerme")
-        if(unidadActual.unit.tipoUnidad =="rey")
+        //Comprobar la suma de influencias de unidades aliadas que recibe 
+        float influenciaActual = unidadActual.unit.tilePosicion.influTile.getSumaInfluenciaAliada();
+        Debug.Log(  "Rey IA\n"+
+                    "Influencia del tile actual:"+influenciaActual);
+        if(influenciaActual < minSumaInfluenciaAliada)
         {
-            //Comprobar la suma de influencias de unidades aliadas que recibe 
-            float influenciaActual = unidadActual.unit.tilePosicion.influTile.getSumaInfluenciaAliada();
-            Debug.Log(  "Rey IA\n"+
-                        "Influencia del tile actual:"+influenciaActual);
-            if(influenciaActual < minSumaInfluenciaAliada)
-            {
-                unidadActual.nombreObjetivo = "Quiero_Protegerme";
-                //buscar tile alcanzable con mayor suma de influencia
-                //(Posible de cambiar ir_a_tile por unidadActual.objetivo)
-                Tile ir_a_tile = unidadActual.unit.MaximaInfluenciaAlcanzable(); 
-                //(Posible de cambiar cuando se implemente el PathFinding)
-                unidadActual.unit.Move(ir_a_tile.transform);
-                //Si sigue sin ser suficiente, mantener "Quiero_Protegerme"
-                influenciaActual = ir_a_tile.influTile.getSumaInfluenciaAliada();
-                if(influenciaActual >= minSumaInfluenciaAliada)
-                    unidadActual.nombreObjetivo = "Estoy_Protegido";
-            }
+            unidadActual.nombreObjetivo = "Quiero_Protegerme";
+            //buscar tile alcanzable con mayor suma de influencia
+            //(Posible de cambiar ir_a_tile por unidadActual.objetivo)
+            Tile ir_a_tile = unidadActual.unit.MaximaInfluenciaAlcanzable(); 
+            //(Posible de cambiar cuando se implemente el PathFinding)
+            unidadActual.unit.Move(ir_a_tile.transform);
+            //Si sigue sin ser suficiente, mantener "Quiero_Protegerme"
+            influenciaActual = ir_a_tile.influTile.getSumaInfluenciaAliada();
+            if(influenciaActual >= minSumaInfluenciaAliada)
+                unidadActual.nombreObjetivo = "Estoy_Protegido";
         }
-        else
+        
+    }
+
+    public void EstrategiaUnidad()
+{
+        // Caso: Quiero_DefenderRey y Estoy_DefendiendoRey"
+        //      Comprobar si el rey está en "Estoy_Protegido"
+        //          Si lo está: comprobar si estamos cerca o lejos del rey
+        //              Si estamos lejos: decidir otra estrategia y moverse según esta
+        //              Si estamos cerca: mantener o cambiar a "Estoy_DefendiendoRey" 
+        //              y no moverse a no ser que haya un enemigo cerca del rey
+        //          Si el rey está en "Quiero_Protegerme": avanzar para situarse cerca del rey
+        if(unidadActual.nombreObjetivo=="Quiero_DefenderRey" || unidadActual.nombreObjetivo=="Estoy_DefendiendoRey")
         {
-            // Caso: Quiero_DefenderRey y Estoy_DefendiendoRey"
-            //      Comprobar si el rey está en "Estoy_Protegido"
-            //          Si lo está: comprobar si estamos cerca o lejos del rey
-            //              Si estamos lejos: decidir otra estrategia y moverse según esta
-            //              Si estamos cerca: mantener o cambiar a "Estoy_DefendiendoRey" 
-            //              y no moverse a no ser que haya un enemigo cerca del rey
-            //          Si el rey está en "Quiero_Protegerme": avanzar para situarse cerca del rey
-            if(unidadActual.nombreObjetivo=="Quiero_DefenderRey" || unidadActual.nombreObjetivo=="Estoy_DefendiendoRey")
+            Debug.Log(  unidadActual.unit.tipoUnidad+"\n"+
+                        "Busca proteger al rey");
+            if(posIaRey.nombreObjetivo=="Estoy_Protegido")
             {
-                if(unidades[posIaRey].nombreObjetivo=="Estoy_Protegido")
+                if(unidadActual.unit.tilePosicion.influTile.iaRey<1)
                 {
-                    if(unidadActual.unit.tilePosicion.influTile.iaRey<1)
-                        DecidirEstrategiaUnidad();
-                    else
-                    {
-                        //Comprobar si hay enemigos cerca
-                        //Si los hay: moverse hacia el más cercano y atacarle
-                        //Si no los hay: quedarse en el sitio y no moverse
-                        Tile tilo = unidadActual.unit.ComprobarEnemigoAlcanzable();
-                        if(tilo!=null)
-                        {
-                            Debug.Log("Decision del "+unidadActual.unit.tipoUnidad+": Atacar enemigo cercano");
-                            unidadActual.unit.Move(tilo.transform);
-                            //Atacar enemigo
-                        }
-                        else
-                            Debug.Log("Decision del "+unidadActual.unit.tipoUnidad+": Quedarme quieto");
-                    }
+                    Debug.Log(unidadActual.unit.tipoUnidad+" decide cambiar de estrategia");
+                    DecidirEstrategiaUnidad();
                 }
                 else
                 {
+                    //Comprobar si hay enemigos cerca
+                    //Si los hay: moverse hacia el más cercano y atacarle
+                    //Si no los hay: quedarse en el sitio y no moverse
+                    Tile tilo = unidadActual.unit.ComprobarEnemigoAlcanzable();
+                    if(tilo!=null)
+                    {
+                        Debug.Log("Decision del "+unidadActual.unit.tipoUnidad+": Atacar enemigo cercano");
+                        unidadActual.unit.Move(tilo.transform);
+                        //Atacar enemigo
+                    }
+                    else
+                        Debug.Log("Decision del "+unidadActual.unit.tipoUnidad+": Quedarme quieto");
+                }
+            }
+            else
+            {
+                //Si se recibe influencia del rey en un tile alcanzable (si ser Infinite) ir hacia él
+                //Si no es alcanzable, PathFinding
+                Tile tilo = unidadActual.unit.ComprobarEnemigoAlcanzable();
+                if(tilo!=null)
+                {
+                    Debug.Log("Decision del "+unidadActual.unit.tipoUnidad+": Acercarse al rey");
+                    unidadActual.unit.Move(tilo.transform);
                     
+                }
+                else
+                {
+                    Debug.Log("Rey no alcanzable en este turno");
+                    //PathFinding hacia el rey
                 }
             }
         }
+        
     }
 
 

@@ -514,6 +514,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &10527417
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2163,6 +2166,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!82 &101392820
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2808,6 +2814,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &130891277
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3230,6 +3239,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!82 &134600355
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3691,6 +3703,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!82 &137113308
 AudioSource:
   m_ObjectHideFlags: 0
@@ -4010,6 +4025,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!82 &139815674
 AudioSource:
   m_ObjectHideFlags: 0
@@ -4534,6 +4552,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &152853640
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5286,6 +5307,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &175871999
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5650,6 +5674,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &204046167
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6394,6 +6421,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &282555594
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6542,6 +6572,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &287163402
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6816,6 +6849,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &291078851
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6987,6 +7023,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &291328400
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -7954,6 +7993,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &395851366
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -8375,6 +8417,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &414040026
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -8797,6 +8842,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &418167243
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -9139,6 +9187,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!82 &420553562
 AudioSource:
   m_ObjectHideFlags: 0
@@ -9435,6 +9486,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &428153500
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -9940,6 +9994,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &430060767
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -10282,6 +10339,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &444275110
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -12057,6 +12117,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &527423823
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -12477,6 +12540,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &562379952
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -12796,6 +12862,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &575068305
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -13115,6 +13184,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &578667771
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -13655,6 +13727,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!82 &592243219
 AudioSource:
   m_ObjectHideFlags: 0
@@ -13951,6 +14026,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &595264534
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -14637,6 +14715,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &619940125
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -14877,6 +14958,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &625330269
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -15196,6 +15280,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &628312349
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -15450,6 +15537,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &637542607
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -16056,6 +16146,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &667053051
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -16762,6 +16855,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!82 &695870702
 AudioSource:
   m_ObjectHideFlags: 0
@@ -16910,6 +17006,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &698368475
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -17351,6 +17450,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!82 &704560013
 AudioSource:
   m_ObjectHideFlags: 0
@@ -17777,6 +17879,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!82 &719362356
 AudioSource:
   m_ObjectHideFlags: 0
@@ -18073,6 +18178,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &721248922
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -18548,6 +18656,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &741485355
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -19142,6 +19253,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &759996221
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -19569,6 +19683,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!82 &771476179
 AudioSource:
   m_ObjectHideFlags: 0
@@ -19751,6 +19868,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &774346181
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -19922,6 +20042,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &788039795
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -20241,6 +20364,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &806980584
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -20560,6 +20686,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &810560396
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -21044,6 +21173,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!82 &832468822
 AudioSource:
   m_ObjectHideFlags: 0
@@ -21221,6 +21353,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &832594871
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -21517,6 +21652,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &834232583
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -21912,6 +22050,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!114 &845843134
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22635,6 +22776,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!82 &879222082
 AudioSource:
   m_ObjectHideFlags: 0
@@ -22783,6 +22927,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &890024803
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -23450,6 +23597,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &904324606
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -23769,6 +23919,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &916831766
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -24230,6 +24383,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &939012646
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -24549,6 +24705,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &943515612
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -24868,6 +25027,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &947828204
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -25264,6 +25426,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &975717436
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -25441,6 +25606,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &996741497
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -25760,6 +25928,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &998868520
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -26316,6 +26487,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!114 &1026215434
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26711,6 +26885,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &1032653867
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -27125,6 +27302,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &1065100065
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -27379,6 +27559,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &1069847870
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -28106,6 +28289,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &1088412909
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -28319,6 +28505,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &1102973360
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -28638,6 +28827,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &1103321009
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -29404,6 +29596,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &1133882772
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -29575,6 +29770,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &1141081254
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -29935,6 +30133,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &1159865039
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -30231,6 +30432,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &1165825735
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -31264,6 +31468,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &1195686604
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -31618,6 +31825,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &1198288875
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -32085,6 +32295,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &1221208186
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -32404,6 +32617,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &1246140698
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -32723,6 +32939,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!114 &1248040151
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33071,6 +33290,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!82 &1258380699
 AudioSource:
   m_ObjectHideFlags: 0
@@ -33367,6 +33589,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &1259736263
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -33686,6 +33911,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &1273104365
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -34117,6 +34345,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &1327578800
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -34413,6 +34644,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!114 &1335968723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34879,6 +35113,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &1345761046
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -36021,6 +36258,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &1399345791
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -36387,6 +36627,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &1409823817
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -37006,6 +37249,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &1425048398
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -37282,6 +37528,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &1434207763
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -37822,6 +38071,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &1452964793
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -38244,6 +38496,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!114 &1461779351
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38958,6 +39213,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!82 &1476138814
 AudioSource:
   m_ObjectHideFlags: 0
@@ -39439,6 +39697,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &1518497446
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -39758,6 +40019,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &1542846997
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -39958,6 +40222,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &1545089231
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -40112,6 +40379,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &1556653416
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -40558,6 +40828,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EstrategiaIA: 
+  unidadActual: {fileID: 0}
+  minSumaInfluenciaAliada: 3
 --- !u!1 &1574191207 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7677967910336022200, guid: d0745185e498645d1b87c30c3d4a70aa,
@@ -40613,6 +40885,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &1574191211
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -41115,6 +41390,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &1591812920
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -41671,6 +41949,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!114 &1605408787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42013,6 +42294,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!82 &1609334926
 AudioSource:
   m_ObjectHideFlags: 0
@@ -42269,6 +42553,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &1619227066
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -42742,6 +43029,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!82 &1640265066
 AudioSource:
   m_ObjectHideFlags: 0
@@ -43291,6 +43581,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &1659197855
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -44126,6 +44419,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!82 &1688087329
 AudioSource:
   m_ObjectHideFlags: 0
@@ -44741,6 +45037,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &1702363186
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -45315,6 +45614,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &1736864602
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -50340,6 +50642,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &1750463339
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -51980,6 +52285,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!82 &1803864041
 AudioSource:
   m_ObjectHideFlags: 0
@@ -52637,6 +52945,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &1810131498
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -52979,6 +53290,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!82 &1818266228
 AudioSource:
   m_ObjectHideFlags: 0
@@ -53275,6 +53589,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &1822241347
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -53594,6 +53911,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &1826945822
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -54138,6 +54458,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &1835241400
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -54457,6 +54780,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &1838774640
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -54879,6 +55205,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &1850219213
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -55325,6 +55654,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &1866218288
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -55789,6 +56121,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &1899208555
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -56001,6 +56336,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &1904743727
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -56904,6 +57242,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!82 &1947635549
 AudioSource:
   m_ObjectHideFlags: 0
@@ -57200,6 +57541,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &1949891190
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -57519,6 +57863,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &1957134210
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -57838,6 +58185,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!114 &1957840415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58157,6 +58507,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &1958112784
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -58788,6 +59141,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &1980904208
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -59204,6 +59560,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!82 &2005656987
 AudioSource:
   m_ObjectHideFlags: 0
@@ -59759,6 +60118,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &2031442937
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -60072,6 +60434,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &2037623484
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -60243,6 +60608,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &2039072399
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -60694,6 +61062,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!82 &2041660061
 AudioSource:
   m_ObjectHideFlags: 0
@@ -61227,6 +61598,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &2073560998
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -61578,6 +61952,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &2094482862
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -61897,6 +62274,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &2100296128
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -62302,6 +62682,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!61 &2127815569
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -62644,6 +63027,9 @@ MonoBehaviour:
   isWalkable: 0
   isCreatable: 0
   amount: 0.025
+  influTile: {fileID: 0}
+  matrizX: 0
+  matrizY: 0
 --- !u!82 &2130445685
 AudioSource:
   m_ObjectHideFlags: 0
