@@ -54,6 +54,7 @@ public class Unit : MonoBehaviour
 
     public Tile tilePosicion;
 
+
     private void Start()
     {
 		source = GetComponent<AudioSource>();
@@ -85,9 +86,23 @@ public class Unit : MonoBehaviour
         PintarInfluencia(true);
     }
 
+    //Para identificar unidades cuando se muestre el output de la consola
+    public string identifica(int num)
+    {
+        switch (num)
+        {
+            default:
+                return tipoUnidad;
+            case 2:
+                return string.Format("{0} del jugador {1}",tipoUnidad,playerNumber);
+            case 3:
+                return string.Format("{0} en casilla {1},{2}",tipoUnidad,tilePosicion.matrizX,tilePosicion.matrizY);
+        }
+    }
+
     public void PintarInfluencia(bool signo)
     {   
-        Debug.Log(tipoUnidad +" de jugador "+playerNumber+" va a Pintar Influencia");
+        //Debug.Log(tipoUnidad +" de jugador "+playerNumber+" va a Pintar Influencia");
         /*
         InfluTile[] tiles = FindObjectsOfType<InfluTile>();
         foreach (InfluTile tile in tiles) 
@@ -126,7 +141,8 @@ public class Unit : MonoBehaviour
                 {
                     Tile tile = gm.matrizTile[i,j];
                     //El tile tiene que ser alcanzable
-                    if (Mathf.Abs(transform.position.x - tile.transform.position.x) + Mathf.Abs(transform.position.y - tile.transform.position.y) <= tileSpeed)
+                    
+                    if (gm.calculaDistancia(this,tile.transform) <= tileSpeed)
                     { // Si no está ocupado
                         if (tile.isClear() == true)
                         { // is the tile clear from any obstacles
@@ -178,10 +194,10 @@ public class Unit : MonoBehaviour
 				}
 				
                 GetWalkableTiles();
-                GetEnemies();
+                GetEnemies(null);
 
                 if(playerNumber == 2)
-                    Debug.Log(unitControl.nombreObjetivo);
+                    Debug.Log("Estrategia de"+tipoUnidad+": "+unitControl.nombreObjetivo);
             }
 
         }
@@ -243,7 +259,7 @@ public class Unit : MonoBehaviour
                 if(i>=0 && i<gm.matrizTile.GetLength(0) && j>=0 && j<gm.matrizTile.GetLength(1))
                 {  
                     Tile tile = gm.matrizTile[i,j];
-                    if (Mathf.Abs(transform.position.x - tile.transform.position.x) + Mathf.Abs(transform.position.y - tile.transform.position.y) <= tileSpeed)
+                    if (gm.calculaDistancia(this,tile.transform) <= tileSpeed)
                     { // how far he can move
                         if (tile.isClear() == true)
                         { // is the tile clear from any obstacles
@@ -256,21 +272,31 @@ public class Unit : MonoBehaviour
     }
 
     //Al seleccionar la unidad, se muestran los enemigos atacables
-    void GetEnemies() {
+    public void GetEnemies(Tile tilePos) {
     
         enemiesInRange.Clear();
 
         Unit[] enemies = FindObjectsOfType<Unit>();
         foreach (Unit enemy in enemies)
         {
-            if (Mathf.Abs(transform.position.x - enemy.transform.position.x) + Mathf.Abs(transform.position.y - enemy.transform.position.y) <= attackRadius) // check is the enemy is near enough to attack
+            //Si se calcula los enemigos alcanzables desde la posición actual
+            if((tilePos==null && 
+            gm.calculaDistancia(this,enemy) <= attackRadius)
+            
+            //O si se calculo desde la posición de un tile determinado
+            || (tilePos!=null &&
+            gm.calculaDistancia(enemy,tilePos.transform) <= attackRadius)) // check is the enemy is near enough to attack
             {
                 if (enemy.playerNumber != gm.playerTurn && !hasAttacked) { // make sure you don't attack your allies
                     enemiesInRange.Add(enemy);
-                    enemy.weaponIcon.SetActive(true);
+                    
+                    //Solo se muestra el icono si es el turno del jugador
+                    if(playerNumber==1)
+                        enemy.weaponIcon.SetActive(true);
                 }
 
             }
+            
         }
     }
 
@@ -279,19 +305,19 @@ public class Unit : MonoBehaviour
     {
         gm.ResetTiles();
         PintarInfluencia(false);
-        StartCoroutine(StartMovement(movePos));
+        StartCoroutine(StartMovement(movePos));      
     }
 
     //Comprueba cada tile hacia el cual puede moverse si desde éste puede atacar
     // a un enemigo(según su attackRadius)
     // si más de un tile cumple esa función, se obtiene el más cercano, incluso
     // si es el tilePosición actual
-    private bool EnemigosAlcanzables()
+    private bool EnemigosAlcanzables(Tile tilePos)
     {
         Unit[] enemies = FindObjectsOfType<Unit>();
         foreach (Unit enemy in enemies)
         {
-            if (Mathf.Abs(transform.position.x - enemy.transform.position.x) + Mathf.Abs(transform.position.y - enemy.transform.position.y) <= attackRadius) // check is the enemy is near enough to attack
+            if (Mathf.Abs(tilePos.transform.position.x - enemy.transform.position.x) + Mathf.Abs(tilePos.transform.position.y - enemy.transform.position.y) <= attackRadius) // check is the enemy is near enough to attack
             {
                 if (enemy.playerNumber != gm.playerTurn)
                     return true;
@@ -316,18 +342,18 @@ public class Unit : MonoBehaviour
                 if(i>=0 && i<gm.matrizTile.GetLength(0) && j>=0 && j<gm.matrizTile.GetLength(1))
                 {  
                     Tile tile = gm.matrizTile[i,j];
-                    if (Mathf.Abs(transform.position.x - tile.transform.position.x) + Mathf.Abs(transform.position.y - tile.transform.position.y) <= tileSpeed)
+                    if (gm.calculaDistancia(this,tile.transform) <= tileSpeed)
                     { // how far he can move
                         if (tile.isClear() == true)
                         { // is the tile clear from any obstacles
                           // desde este tile, comprobar si hay un enemigo alcanzable
-                          if(EnemigosAlcanzables())
+                          if(EnemigosAlcanzables(tile))
                           {
                               // si más de un tile cumple esa función, se obtiene el más cercano, incluso
                               // si es el tilePosición actual
                               if(tile_atacar==null || 
-                              Mathf.Abs(transform.position.x - tile.transform.position.x) + Mathf.Abs(transform.position.y - tile.transform.position.y) <=
-                              Mathf.Abs(transform.position.x - tile_atacar.transform.position.x) + Mathf.Abs(transform.position.y - tile_atacar.transform.position.y)) 
+                              gm.calculaDistancia(this,tile.transform) <=
+                              gm.calculaDistancia(this,tile_atacar.transform)) 
                                 tile_atacar = tile;
                           }
                         }
@@ -355,7 +381,7 @@ public class Unit : MonoBehaviour
                 if(i>=0 && i<gm.matrizTile.GetLength(0) && j>=0 && j<gm.matrizTile.GetLength(1))
                 {  
                     Tile tile = gm.matrizTile[i,j];
-                    if (Mathf.Abs(transform.position.x - tile.transform.position.x) + Mathf.Abs(transform.position.y - tile.transform.position.y) <= tileSpeed)
+                    if (gm.calculaDistancia(this,tile.transform) <= tileSpeed)
                     { // how far he can move
                         if (tile.isClear() == true)
                         { // is the tile clear from any obstacles
@@ -375,7 +401,7 @@ public class Unit : MonoBehaviour
     }
 
     // La unidad seleccionada por GM ataca a la seleccionada en OnMouseDown (enemy)
-    void Attack(Unit enemy) {
+    public void Attack(Unit enemy) {
         hasAttacked = true;
 
         int enemyDamege = attackDamage - enemy.armor;
@@ -391,7 +417,7 @@ public class Unit : MonoBehaviour
 
         if (transform.tag == "Archer" && enemy.tag != "Archer")
         {
-            if (Mathf.Abs(transform.position.x - enemy.transform.position.x) + Mathf.Abs(transform.position.y - enemy.transform.position.y) <= 1) // check is the enemy is near enough to attack
+            if (gm.calculaDistancia(this, enemy) <= 1) // check is the enemy is near enough to attack
             {
                 if (unitDamage >= 1)
                 {
@@ -428,6 +454,10 @@ public class Unit : MonoBehaviour
             //Si el enemigo era de la IA, se ha de borrar de la lista del IAPlayer
             enemy.PintarInfluencia(false);
             gm.RemoveInfoPanel(enemy);
+
+            //Si el enemigo era del jugador, la IA debe de dejar de considerarlo como enemigo objetivo de la unidad
+            if(enemy.playerNumber==1)
+                gm.OlvidarEnemigoMatado(enemy);
             Destroy(enemy.gameObject);
         }
 
@@ -481,8 +511,12 @@ public class Unit : MonoBehaviour
         hasMoved = true;
         PintarInfluencia(true);
         ResetWeaponIcon();
-        GetEnemies();
+        GetEnemies(null);
         gm.MoveInfoPanel(this);
+
+        //Si es una unidad de la IA, se le notifica al gm para que el iaPlayer continue
+        if(playerNumber==2)
+            gm.AcabarAccionUnidadIA();
     }
 
 

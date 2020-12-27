@@ -10,10 +10,18 @@ public class IA_UnitControl : MonoBehaviour
     public bool esRey;
     public Tile tileObjetivo;
 
+    public Tile casillaObjetivoTurno = null;
+    public Unit enemigoObjetivoTurno = null;
+
     void Awake()
     {
         unit = GetComponent<Unit>();
         esRey = unit.isKing;
+    }
+
+    public string identifica(int num)
+    {
+        return unit.identifica(num);
     }
 
     

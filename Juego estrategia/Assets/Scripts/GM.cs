@@ -168,7 +168,7 @@ public class GM : MonoBehaviour
     }
 
     
-    void EndTurn() {
+    public void EndTurn() {
 		source.Play();
         camAnim.SetTrigger("shake");
 
@@ -201,6 +201,32 @@ public class GM : MonoBehaviour
         GetGoldIncome(playerTurn);
         GetComponent<CharacterCreation>().CloseCharacterCreationMenus();
         createdUnit = null;
+    }
+
+    //Si la unidad realiza una acción (Mover/Atacar) y es de la IA,
+    //el gm notifica a IAPlayer que esa unidad debe continuar con otra acción
+    public void AcabarAccionUnidadIA()
+    {
+        iaPlayer.cuentaOrden++;
+        iaPlayer.SiguienteAccionUnidad();
+    }
+
+    //Para realizar más eficientemente los cálculos de distancia entre unidades
+    public float calculaDistancia(Unit unidad, Unit enemigo)
+    {
+        return Mathf.Abs(unidad.transform.position.x - enemigo.transform.position.x) 
+        + Mathf.Abs(unidad.transform.position.y - enemigo.transform.position.y);
+    }
+
+    public float calculaDistancia(Unit unidad, Transform elemento)
+    {
+        return Mathf.Abs(unidad.transform.position.x - elemento.position.x) 
+        + Mathf.Abs(unidad.transform.position.y - elemento.position.y);
+    }
+
+    public void OlvidarEnemigoMatado(Unit enemigo)
+    {
+        iaPlayer.OlvidarEnemigoMatado(enemigo);
     }
 
     void GetGoldIncome(int playerTurn) {

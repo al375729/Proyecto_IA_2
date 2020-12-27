@@ -72,6 +72,7 @@ public class Tile : MonoBehaviour
         //Después de seleccionar el personaje y que resalten los tiles alcanzables,
         //pulsamos en uno de éstos para que vaya hacia él
         if (isWalkable == true) {
+            gm.selectedUnit.tilePosicion = this;
             gm.selectedUnit.Move(this.transform);
 
             //Para cuando se quiera spawnear una unidad ya seleccionada del menú

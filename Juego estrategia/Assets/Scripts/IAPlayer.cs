@@ -4,20 +4,34 @@ using UnityEngine;
 
 public class IAPlayer : MonoBehaviour
 {
-    
+    public GM gm;
     public string EstrategiaIA;
 
     IA_UnitControl[] todos;
-    IA_UnitControl posJugRey;
-    IA_UnitControl posIaRey;
+    IA_UnitControl jugadorRey;
+    IA_UnitControl iaRey;
 
     public IA_UnitControl unidadActual;
 
     //Cantidad de influencia que tiene que recibir el rey de las unidades enemigas
     public float minSumaInfluenciaAliada = 3f;
 
+    //Para las ordenes en SiguienteAccionUnidad
+    //Posibles valores: "Mover","Atacar","Nada"
+    private string[] ordenesUnidad = {"Nada","Nada","Nada"};
+    
+
+    private int cuentaUnidad;
+    //Esta variable es pública porque el gm indica que una unidad ha
+    //realizado una acción
+    public int cuentaOrden;
+
+    //Para controlar lo que se muestra por la consola
+    int cuentaTurno;
+
     void Start()
     {
+        gm = FindObjectOfType<GM>();
         EstrategiaIA = "Neutral";
 
         //Recoger todas las unidades en el inicio
@@ -26,19 +40,23 @@ public class IAPlayer : MonoBehaviour
         for(int i=0; i<todos.Length; i++)
         {
             if(todos[i].unit.tipoUnidad=="rey" && todos[i].unit.playerNumber==1)
-                posJugRey = todos[i];
+                jugadorRey = todos[i];
             else if(todos[i].unit.tipoUnidad=="rey" && todos[i].unit.playerNumber==2)
-                posIaRey = todos[i];
+                iaRey = todos[i];
         }
-        //Falta que se recoja cada unidad spawneada durante la partida
+        
+        cuentaTurno = 0;
     }
 
     public void TurnoIA()
     {
-        Debug.Log("Turno de la IA");
+        cuentaTurno++;
+        Debug.Log("----------TURNO "+cuentaTurno+" DE LA IA ----------");
         //Recoger todas las unidades del juego y trabajar sólo con
         todos = FindObjectsOfType<IA_UnitControl>();
-        for(int i = 0; i<todos.Length; i++)
+        cuentaUnidad = 0;
+        SiguienteUnidad();
+        /*for(int i = 0; i<todos.Length; i++)
             if(todos[i]!=null)
             {
                 unidadActual = todos[i];
@@ -50,10 +68,46 @@ public class IAPlayer : MonoBehaviour
                     EstrategiaRey();
                 else
                     EstrategiaUnidad();
-            }
+            }*/
 
 
     }
+
+    public void SiguienteUnidad()
+    {
+        if(cuentaUnidad>=todos.Length || todos[cuentaUnidad]==null)
+        {
+            Debug.Log("La IA ha acabado el turno "+cuentaTurno+", le toca al jugador");
+            gm.EndTurn();
+        }
+        else
+        {
+            unidadActual = todos[cuentaUnidad];
+            
+            //Si no tiene una estrategia, asignarle una según el estado actual
+            if(unidadActual.nombreObjetivo == "")
+                DecidirEstrategiaUnidad("");
+
+            //Se vacía el vector de ordenes
+            ordenesUnidad[0] = "Nada";
+            ordenesUnidad[1] = "Nada";
+            cuentaOrden = 0;
+            
+            if(unidadActual == iaRey)
+                EstrategiaRey();
+            else
+                EstrategiaUnidad();
+        }
+
+    }
+
+    //Para mostrar información por la consola
+    private void MuestraConsola(string info)
+    {
+        Debug.Log(  "Turno "+cuentaTurno+": "+ unidadActual.identifica(3)+"\n"+
+                    info);
+    }
+
 
     public void EstrategiaRey()
     {
@@ -77,26 +131,31 @@ public class IAPlayer : MonoBehaviour
         
         //Comprobar la suma de influencias de unidades aliadas que recibe 
         float influenciaActual = unidadActual.unit.tilePosicion.influTile.getSumaInfluenciaAliada();
-        Debug.Log(  "Rey IA\n"+
-                    "Influencia del tile actual:"+influenciaActual);
+        MuestraConsola("Influencia del tile actual:"+influenciaActual);
         if(influenciaActual < minSumaInfluenciaAliada)
         {
             unidadActual.nombreObjetivo = "Quiero_Protegerme";
             //buscar tile alcanzable con mayor suma de influencia
             //(Posible de cambiar ir_a_tile por unidadActual.objetivo)
-            Tile ir_a_tile = unidadActual.unit.MaximaInfluenciaAlcanzable(); 
+            Tile ir_a_tile = unidadActual.unit.MaximaInfluenciaAlcanzable();
+            unidadActual.casillaObjetivoTurno = ir_a_tile; 
             //(Posible de cambiar cuando se implemente el PathFinding)
-            unidadActual.unit.Move(ir_a_tile.transform);
+            ordenesUnidad[cuentaOrden++] = "Mover";
             //Si sigue sin ser suficiente, mantener "Quiero_Protegerme"
             influenciaActual = ir_a_tile.influTile.getSumaInfluenciaAliada();
             if(influenciaActual >= minSumaInfluenciaAliada)
                 unidadActual.nombreObjetivo = "Estoy_Protegido";
         }
+
+        MuestraConsola("Realizará: 1º: "+ordenesUnidad[0]+"; 2º: "+ordenesUnidad[1]);
+        SiguienteAccionUnidad();
         
     }
 
     public void EstrategiaUnidad()
 {
+    
+    
         // Caso: Quiero_DefenderRey y Estoy_DefendiendoRey"
         //      Comprobar si el rey está en "Estoy_Protegido"
         //          Si lo está: comprobar si estamos cerca o lejos del rey
@@ -106,14 +165,14 @@ public class IAPlayer : MonoBehaviour
         //          Si el rey está en "Quiero_Protegerme": avanzar para situarse cerca del rey
         if(unidadActual.nombreObjetivo=="Quiero_DefenderRey" || unidadActual.nombreObjetivo=="Estoy_DefendiendoRey")
         {
-            Debug.Log(  unidadActual.unit.tipoUnidad+"\n"+
-                        "Busca proteger al rey");
-            if(posIaRey.nombreObjetivo=="Estoy_Protegido")
+            MuestraConsola("Busca proteger al rey");
+            if(iaRey.nombreObjetivo=="Estoy_Protegido")
             {
-                if(unidadActual.unit.tilePosicion.influTile.iaRey<1)
+                if(unidadActual.nombreObjetivo=="Quiero_DefenderRey" || unidadActual.unit.tilePosicion.influTile.iaRey<1)
                 {
-                    Debug.Log(unidadActual.unit.tipoUnidad+" decide cambiar de estrategia");
-                    DecidirEstrategiaUnidad();
+                    MuestraConsola(" decide cambiar de estrategia");
+                    DecidirEstrategiaUnidad("Descarta_Quiero_DefenderRey");
+                    EstrategiaUnidad();
                 }
                 else
                 {
@@ -123,38 +182,182 @@ public class IAPlayer : MonoBehaviour
                     Tile tilo = unidadActual.unit.ComprobarEnemigoAlcanzable();
                     if(tilo!=null)
                     {
-                        Debug.Log("Decision del "+unidadActual.unit.tipoUnidad+": Atacar enemigo cercano");
-                        unidadActual.unit.Move(tilo.transform);
+                        MuestraConsola(" decide: Atacar enemigo cercano");
+                        unidadActual.casillaObjetivoTurno = tilo;
+                        ordenesUnidad[cuentaOrden++] = "Mover";
                         //Atacar enemigo
+                        DecidirEnemigo("El mas cercano al rey aliado");
                     }
                     else
-                        Debug.Log("Decision del "+unidadActual.unit.tipoUnidad+": Quedarme quieto");
+                        MuestraConsola(" decide: Quedarme quieto");
                 }
             }
             else
             {
                 //Si se recibe influencia del rey en un tile alcanzable (si ser Infinite) ir hacia él
                 //Si no es alcanzable, PathFinding
-                Tile tilo = unidadActual.unit.ComprobarEnemigoAlcanzable();
+                Tile tilo = unidadActual.unit.ComprobarReyAliadoAlcanzable();
                 if(tilo!=null)
                 {
-                    Debug.Log("Decision del "+unidadActual.unit.tipoUnidad+": Acercarse al rey");
-                    unidadActual.unit.Move(tilo.transform);
+                    MuestraConsola(" decide: Acercarse al rey");
+                    unidadActual.casillaObjetivoTurno = tilo;
+                    ordenesUnidad[0] = "Mover";
                     
                 }
                 else
                 {
-                    Debug.Log("Rey no alcanzable en este turno");
+                    MuestraConsola(": Rey no alcanzable en este turno");
                     //PathFinding hacia el rey
                 }
             }
         }
-        
+
+        else if(unidadActual.nombreObjetivo=="Quiero_AtacarEnemigos" || unidadActual.nombreObjetivo=="Estoy_AtacandoEnemigos")
+        {
+            MuestraConsola( "Busca atacar a enemigos cercanos");
+            if(unidadActual.enemigoObjetivoTurno==null )    
+                DecidirEnemigo("");
+
+            if(unidadActual.enemigoObjetivoTurno!=null && 
+            gm.calculaDistancia(unidadActual.unit, unidadActual.enemigoObjetivoTurno) <= unidadActual.unit.attackRadius)
+            {
+                //unidadActual.unit.Attack(unidadActual.enemigoObjetivoTurno);
+                ordenesUnidad[cuentaOrden++] = "Atacar";
+            }
+            else
+            {
+                Tile tilo = unidadActual.unit.ComprobarEnemigoAlcanzable();
+                if(tilo!=null)
+                {
+                    unidadActual.casillaObjetivoTurno = tilo;
+                    ordenesUnidad[cuentaOrden++] = "Mover";
+                    DecidirEnemigo("");
+                }
+            }
+            
+
+            
+        }
+        else if(unidadActual.nombreObjetivo=="Quiero_AtacarRey" || unidadActual.nombreObjetivo=="Estoy_AtacandoRey")
+        {
+            MuestraConsola( "Busca atacar al rey enemigo\n"+
+                            "Sin código todavía para esto");
+
+            
+        }
+
+        MuestraConsola("Realizará: 1º: "+ordenesUnidad[0]+"; 2º: "+ordenesUnidad[1]);
+        cuentaOrden = 0;
+        SiguienteAccionUnidad();
     }
 
+    void DecidirEnemigo(string info)
+    {
+        //Si ya tiene un enemigo definido y es alcanzable en el momento, continua como enemigo a atacar
+        if(unidadActual.enemigoObjetivoTurno!=null && 
+        gm.calculaDistancia(unidadActual.unit, unidadActual.enemigoObjetivoTurno) <= unidadActual.unit.attackRadius)
+        {
+            //unidadActual.unit.Attack(unidadActual.enemigoObjetivoTurno);
+            //ordenesUnidad[cuentaOrden++] = "Atacar";
+            return;
+        }
+
+        //Obtener lista de los enemigos alcanzables
+        if(unidadActual.casillaObjetivoTurno!=null)
+            unidadActual.unit.GetEnemies(unidadActual.casillaObjetivoTurno);
+        else
+            unidadActual.unit.GetEnemies(null);
+
+        //Si la lista es vacía, no se registra orden de atacar
+        if(unidadActual.unit.enemiesInRange.Count==0)   return;
+
+        //Si se ordena atacar al enemigo más próximo al rey IA
+        if(info=="El mas cercano al rey aliado")
+        {
+            Unit enemigoMasCercano = null;
+            float distanciaEnemigoMasCercano = Mathf.Infinity;
+            foreach(Unit enemigo in unidadActual.unit.enemiesInRange)
+            {
+                float distanciaEnemigo = gm.calculaDistancia(iaRey.unit,enemigo);
+                if(enemigoMasCercano==null || distanciaEnemigo<distanciaEnemigoMasCercano)
+                {
+                    enemigoMasCercano = enemigo;
+                    distanciaEnemigoMasCercano = distanciaEnemigo;
+                }
+            }
+
+            ordenesUnidad[cuentaOrden++] = "Atacar";
+            unidadActual.enemigoObjetivoTurno = enemigoMasCercano;
+        }
+
+        //En caso de que se quiera atacar al enemigo más cercano a la unidad
+        else
+        {
+            Unit enemigoMasCercano = null;
+            float distanciaEnemigoMasCercano = Mathf.Infinity;
+            foreach(Unit enemigo in unidadActual.unit.enemiesInRange)
+            {
+                float distanciaEnemigo = gm.calculaDistancia(unidadActual.unit,enemigo);
+                if(enemigoMasCercano==null || distanciaEnemigo<distanciaEnemigoMasCercano)
+                {
+                    enemigoMasCercano = enemigo;
+                    distanciaEnemigoMasCercano = distanciaEnemigo;
+                }
+            }
+
+            //ordenesUnidad[cuentaOrden++] = "Atacar";
+            unidadActual.enemigoObjetivoTurno = enemigoMasCercano;
+        }
+        MuestraConsola(" elige como enemigo a"+unidadActual.enemigoObjetivoTurno.identifica(3));
+    }
+
+    //Cuando un enemigo ha muerto y una o más unidades lo señalaban como objetivo, se ha de borrar
+    public void OlvidarEnemigoMatado(Unit enemigo)
+    {
+        foreach(IA_UnitControl unidad in todos)
+        {
+            if(unidad.enemigoObjetivoTurno == enemigo)
+                unidad.enemigoObjetivoTurno = null;
+        }
+    }
+
+    public void SiguienteAccionUnidad()
+    {
+        if(cuentaOrden>=2 || ordenesUnidad[cuentaOrden]=="Nada")
+        {
+            ++cuentaUnidad;
+            SiguienteUnidad();
+        }
+        else if(ordenesUnidad[cuentaOrden]=="Mover")
+        {
+            if(!unidadActual.unit.hasMoved && unidadActual.casillaObjetivoTurno!=null)
+            {
+                unidadActual.unit.tilePosicion=unidadActual.casillaObjetivoTurno;
+                unidadActual.unit.Move(unidadActual.casillaObjetivoTurno.transform);
+            }
+            else 
+            {
+                cuentaOrden++;
+                SiguienteAccionUnidad();
+            }
+        }
+        else if(ordenesUnidad[cuentaOrden]=="Atacar")
+        {
+            if(!unidadActual.unit.hasAttacked && unidadActual.enemigoObjetivoTurno!=null)
+            {
+                unidadActual.unit.Attack(unidadActual.enemigoObjetivoTurno);
+            }
+            else 
+            {
+                cuentaOrden++;
+                SiguienteAccionUnidad();
+            }
+        }
 
 
-    private void DecidirEstrategiaUnidad()
+    }
+
+    private void DecidirEstrategiaUnidad(string info)
     {
         //EstrategiaIA por defecto: Neutral
             // Quiero_Protegerme
@@ -171,7 +374,7 @@ public class IAPlayer : MonoBehaviour
 
             if(!unidadActual.esRey)
             {
-                Debug.Log("Fijar nueva estrategia para "+unidadActual.unit.tipoUnidad);
+                MuestraConsola("Fijar nueva estrategia");
 
                 float distanciaReyIa = float.PositiveInfinity;
                 float distanciaEnemigoMasCercano = float.PositiveInfinity;
@@ -188,7 +391,10 @@ public class IAPlayer : MonoBehaviour
                         + Mathf.Abs(unidadActual.transform.position.y - este.transform.position.y);
                     //Distancia hasta rey jugador
                     if(este.playerNumber == 2 && este.isKing)
-                        distanciaReyIa = distancia;
+                        if(info=="Descarta_Quiero_DefenderRey")
+                            distanciaReyIa = Mathf.Infinity;
+                        else
+                            distanciaReyIa = distancia;
 
                     else if(este.playerNumber ==1 && este.isKing)
                         distanciaReyJug = distancia;
@@ -204,7 +410,7 @@ public class IAPlayer : MonoBehaviour
                 else if(maxDistancia == distanciaReyJug)    unidadActual.nombreObjetivo = "Quiero_AtacarRey";
                 else                                        unidadActual.nombreObjetivo = "Quiero_AtacarEnemigos";
 
-                Debug.Log("Estrategia para "+unidadActual.unit.tipoUnidad+": "+unidadActual.nombreObjetivo);
+                MuestraConsola("Nueva estrategia: "+unidadActual.nombreObjetivo);
             }
             else
                 unidadActual.nombreObjetivo = "Quiero_Protegerme";
