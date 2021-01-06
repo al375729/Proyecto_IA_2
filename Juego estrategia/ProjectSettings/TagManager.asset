@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Archer
   - infoPanel
+  - Trigger
   layers:
   - Default
   - TransparentFX

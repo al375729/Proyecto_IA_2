@@ -276,7 +276,7 @@ Transform:
   m_LocalScale: {x: 3.847916, y: 7.7400613, z: 3.5383136}
   m_Children: []
   m_Father: {fileID: 179943397156523661}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &179943396381719447
 SpriteRenderer:
@@ -528,7 +528,7 @@ Transform:
   - {fileID: 179943396441814676}
   - {fileID: 179943395686883947}
   m_Father: {fileID: 179943397156523661}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &179943397032441590
 SpriteRenderer:
@@ -617,6 +617,7 @@ Transform:
   m_Children:
   - {fileID: 179943396338207493}
   - {fileID: 179943396912189026}
+  - {fileID: 5554763756354544401}
   - {fileID: 179943397032441589}
   - {fileID: 179943396381719446}
   m_Father: {fileID: 0}
@@ -655,6 +656,8 @@ MonoBehaviour:
   isKing: 1
   displayedText: {fileID: 0}
   tipoUnidad: rey
+  unitControl: {fileID: 0}
+  tilePosicion: {fileID: 0}
 --- !u!114 &179943397156523650
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -821,3 +824,104 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd5163b0caf38b74189d19b21ebf862d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unit: {fileID: 0}
+  nombreObjetivo: 
+  esRey: 0
+  tileObjetivo: {fileID: 0}
+  casillaObjetivoTurno: {fileID: 0}
+  enemigoObjetivoTurno: {fileID: 0}
+--- !u!1 &1374502806696612564
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5554763756354544401}
+  - component: {fileID: 3934880108948590569}
+  - component: {fileID: 695994115504452218}
+  - component: {fileID: 1013961971478252006}
+  m_Layer: 9
+  m_Name: Hitbox  A*
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5554763756354544401
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1374502806696612564}
+  m_LocalRotation: {x: -0, y: -0, z: -0.038067304, w: 0.9992752}
+  m_LocalPosition: {x: 0.15, y: 1.31, z: 0.8361183}
+  m_LocalScale: {x: 1.5244604, y: 1.5244604, z: 1.5244604}
+  m_Children: []
+  m_Father: {fileID: 179943397156523661}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &3934880108948590569
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1374502806696612564}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &695994115504452218
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1374502806696612564}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &1013961971478252006
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1374502806696612564}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.9999999, y: 0.9999999, z: 0.9999999}
+  m_Center: {x: 0, y: 0, z: -0.00000005960464}

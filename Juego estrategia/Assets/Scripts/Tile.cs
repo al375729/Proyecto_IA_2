@@ -33,7 +33,6 @@ public class Tile : MonoBehaviour
         gm = FindObjectOfType<GM>();
         rend = GetComponent<SpriteRenderer>();
         influTile = GetComponent<InfluTile>();
-
     }
 
     public bool isClear() // para detectar a los gameObjects con layer Obstacle
@@ -67,7 +66,7 @@ public class Tile : MonoBehaviour
         isCreatable = true;
     }
 
-    private void OnMouseDown()
+   /*private void OnMouseDown()
     {
         //Después de seleccionar el personaje y que resalten los tiles alcanzables,
         //pulsamos en uno de éstos para que vaya hacia él
@@ -119,5 +118,5 @@ public class Tile : MonoBehaviour
             sizeIncrease = false;
             transform.localScale -= new Vector3(amount, amount, amount);
         }
-    }
+    }*/
 }
