@@ -211,6 +211,13 @@ public class GM : MonoBehaviour
         iaPlayer.SiguienteAccionUnidad();
     }
 
+    public void AcabarAccionYMatarUnidadIA(GameObject unidad)
+    {
+        Destroy(unidad);
+        iaPlayer.cuentaOrden++;
+        iaPlayer.SiguienteAccionUnidad();
+    }
+
     //Para realizar más eficientemente los cálculos de distancia entre unidades
     public float calculaDistancia(Unit unidad, Unit enemigo)
     {

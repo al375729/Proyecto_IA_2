@@ -478,8 +478,14 @@ public class Unit : MonoBehaviour
             gm.ResetTiles(); // reset tiles when we die
             gm.RemoveInfoPanel(this);
             PintarInfluencia(false);
-            Destroy(gameObject);
+            if(playerNumber==2)
+                gm.AcabarAccionYMatarUnidadIA(this.gameObject);
+            else
+                Destroy(gameObject);
         }
+
+        else if(playerNumber==2)
+            gm.AcabarAccionUnidadIA();
 
         gm.UpdateInfoStats();
   

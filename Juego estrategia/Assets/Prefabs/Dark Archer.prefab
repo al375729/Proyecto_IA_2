@@ -610,6 +610,7 @@ GameObject:
   - component: {fileID: 3293640991218369721}
   - component: {fileID: 3293640991218369726}
   - component: {fileID: 1411393258}
+  - component: {fileID: 5790675326253155792}
   m_Layer: 9
   m_Name: Dark Archer
   m_TagString: Archer
@@ -826,6 +827,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5790675326253155792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3293640991218369701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0928160f57b7b7f42bde60fbb362126f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  contenedorGrid: {fileID: 0}
 --- !u!1 &3293640991254917044
 GameObject:
   m_ObjectHideFlags: 0

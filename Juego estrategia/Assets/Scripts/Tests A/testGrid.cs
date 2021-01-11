@@ -6,7 +6,7 @@ public class testGrid : MonoBehaviour
 {
     public Tile[,] matrizTile;
     // Start is called before the first frame update
-    public Unidad unidad;
+    public IA_UnitPathFind unidad;
     public Transform target;
     public GameObject targetGO;
     void Awake()

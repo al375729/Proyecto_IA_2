@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Unidad : MonoBehaviour {
+public class IA_UnitPathFind : MonoBehaviour {
 
 
 	//public Transform target;
@@ -11,8 +11,13 @@ public class Unidad : MonoBehaviour {
 	int maxPasos = 0;
 	public GameObject contenedorGrid;
 	private Grid grid;
+
+	//Para llamar al método AcabarPathFinding
+	private IA_UnitControl unitControl;
+
 	void Start() {
 		grid = contenedorGrid.GetComponent<Grid>();
+		unitControl = GetComponent<IA_UnitControl>();
 		
 	}
 
@@ -99,6 +104,8 @@ public class Unidad : MonoBehaviour {
 			yield return null;
 
 		}
+
+
 	}
 
 	public void OnDrawGizmos() {

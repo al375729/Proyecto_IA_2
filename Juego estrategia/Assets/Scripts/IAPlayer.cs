@@ -17,7 +17,7 @@ public class IAPlayer : MonoBehaviour
     public float minSumaInfluenciaAliada = 3f;
 
     //Para las ordenes en SiguienteAccionUnidad
-    //Posibles valores: "Mover","Atacar","Nada"
+    //Posibles valores: "Mover","Atacar","Nada", "PathFindingHaciaTile", "PathFindingHaciaUnidad"
     private string[] ordenesUnidad = {"Nada","Nada","Nada"};
     
 
@@ -206,8 +206,10 @@ public class IAPlayer : MonoBehaviour
                 }
                 else
                 {
-                    MuestraConsola(": Rey no alcanzable en este turno");
+                    MuestraConsola(": Rey no alcanzable en este turno, avanzar con PathFinding");
                     //PathFinding hacia el rey
+                    unidadActual.unidadObjetivoTurno = iaRey.unit;
+                    ordenesUnidad[0] = "PathFindingHaciaUnidad";
                 }
             }
         }
@@ -215,11 +217,11 @@ public class IAPlayer : MonoBehaviour
         else if(unidadActual.nombreObjetivo=="Quiero_AtacarEnemigos" || unidadActual.nombreObjetivo=="Estoy_AtacandoEnemigos")
         {
             MuestraConsola( "Busca atacar a enemigos cercanos");
-            if(unidadActual.enemigoObjetivoTurno==null )    
+            if(unidadActual.unidadObjetivoTurno==null )    
                 DecidirEnemigo("");
 
-            if(unidadActual.enemigoObjetivoTurno!=null && 
-            gm.calculaDistancia(unidadActual.unit, unidadActual.enemigoObjetivoTurno) <= unidadActual.unit.attackRadius)
+            if(unidadActual.unidadObjetivoTurno!=null && 
+            gm.calculaDistancia(unidadActual.unit, unidadActual.unidadObjetivoTurno) <= unidadActual.unit.attackRadius)
             {
                 //unidadActual.unit.Attack(unidadActual.enemigoObjetivoTurno);
                 ordenesUnidad[cuentaOrden++] = "Atacar";
@@ -254,8 +256,8 @@ public class IAPlayer : MonoBehaviour
     void DecidirEnemigo(string info)
     {
         //Si ya tiene un enemigo definido y es alcanzable en el momento, continua como enemigo a atacar
-        if(unidadActual.enemigoObjetivoTurno!=null && 
-        gm.calculaDistancia(unidadActual.unit, unidadActual.enemigoObjetivoTurno) <= unidadActual.unit.attackRadius)
+        if(unidadActual.unidadObjetivoTurno!=null && 
+        gm.calculaDistancia(unidadActual.unit, unidadActual.unidadObjetivoTurno) <= unidadActual.unit.attackRadius)
         {
             //unidadActual.unit.Attack(unidadActual.enemigoObjetivoTurno);
             //ordenesUnidad[cuentaOrden++] = "Atacar";
@@ -287,7 +289,7 @@ public class IAPlayer : MonoBehaviour
             }
 
             ordenesUnidad[cuentaOrden++] = "Atacar";
-            unidadActual.enemigoObjetivoTurno = enemigoMasCercano;
+            unidadActual.unidadObjetivoTurno = enemigoMasCercano;
         }
 
         //En caso de que se quiera atacar al enemigo más cercano a la unidad
@@ -306,9 +308,9 @@ public class IAPlayer : MonoBehaviour
             }
 
             //ordenesUnidad[cuentaOrden++] = "Atacar";
-            unidadActual.enemigoObjetivoTurno = enemigoMasCercano;
+            unidadActual.unidadObjetivoTurno = enemigoMasCercano;
         }
-        MuestraConsola(" elige como enemigo a"+unidadActual.enemigoObjetivoTurno.identifica(3));
+        MuestraConsola(" elige como enemigo a"+unidadActual.unidadObjetivoTurno.identifica(3));
     }
 
     //Cuando un enemigo ha muerto y una o más unidades lo señalaban como objetivo, se ha de borrar
@@ -316,8 +318,8 @@ public class IAPlayer : MonoBehaviour
     {
         foreach(IA_UnitControl unidad in todos)
         {
-            if(unidad.enemigoObjetivoTurno == enemigo)
-                unidad.enemigoObjetivoTurno = null;
+            if(unidad.unidadObjetivoTurno == enemigo)
+                unidad.unidadObjetivoTurno = null;
         }
     }
 
@@ -341,11 +343,32 @@ public class IAPlayer : MonoBehaviour
                 SiguienteAccionUnidad();
             }
         }
+        else if(ordenesUnidad[cuentaOrden]=="PathFindingHaciaTile" || ordenesUnidad[cuentaOrden]=="PathFindingHaciaUnidad")
+        {
+            if(!unidadActual.unit.hasMoved && unidadActual.casillaObjetivoTurno!=null)
+            {
+                //unidadActual.unit.tilePosicion=unidadActual.casillaObjetivoTurno;
+                //unidadActual.unit.Move(unidadActual.casillaObjetivoTurno.transform);
+                if(ordenesUnidad[cuentaOrden]=="PathFindingHaciaTile")
+                {
+                    unidadActual.CaminoPathFinding(false);
+                }
+                else
+                {
+                    unidadActual.CaminoPathFinding(true);
+                }
+            }
+            else 
+            {
+                cuentaOrden++;
+                SiguienteAccionUnidad();
+            }
+        }
         else if(ordenesUnidad[cuentaOrden]=="Atacar")
         {
-            if(!unidadActual.unit.hasAttacked && unidadActual.enemigoObjetivoTurno!=null)
+            if(!unidadActual.unit.hasAttacked && unidadActual.unidadObjetivoTurno!=null)
             {
-                unidadActual.unit.Attack(unidadActual.enemigoObjetivoTurno);
+                unidadActual.unit.Attack(unidadActual.unidadObjetivoTurno);
             }
             else 
             {
