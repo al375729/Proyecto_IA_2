@@ -9,14 +9,14 @@ public class IA_UnitPathFind : MonoBehaviour {
 	Vector3[] path;
 	int targetIndex;
 	int maxPasos = 0;
-	public GameObject contenedorGrid;
+	//public GameObject contenedorGrid;
 	private Grid grid;
 
 	//Para llamar al método AcabarPathFinding
 	private IA_UnitControl unitControl;
 
 	void Start() {
-		grid = contenedorGrid.GetComponent<Grid>();
+		grid = FindObjectOfType<Grid>();
 		unitControl = GetComponent<IA_UnitControl>();
 		
 	}
