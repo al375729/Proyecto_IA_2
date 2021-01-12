@@ -516,6 +516,7 @@ GameObject:
   - component: {fileID: 1584046052}
   - component: {fileID: 569263047}
   - component: {fileID: 8119713288787919552}
+  - component: {fileID: 8726074334835772896}
   m_Layer: 9
   m_Name: Blue Knight
   m_TagString: Untagged
@@ -749,7 +750,19 @@ MonoBehaviour:
   esRey: 0
   tileObjetivo: {fileID: 0}
   casillaObjetivoTurno: {fileID: 0}
-  enemigoObjetivoTurno: {fileID: 0}
+  unidadObjetivoTurno: {fileID: 0}
+--- !u!114 &8726074334835772896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 203797387408590348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0928160f57b7b7f42bde60fbb362126f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &203797387714615603
 GameObject:
   m_ObjectHideFlags: 0

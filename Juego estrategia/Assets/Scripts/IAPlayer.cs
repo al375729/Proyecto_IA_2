@@ -8,7 +8,7 @@ public class IAPlayer : MonoBehaviour
     public string EstrategiaIA;
 
     IA_UnitControl[] todos;
-    IA_UnitControl jugadorRey;
+    Unit jugadorRey;
     IA_UnitControl iaRey;
 
     public IA_UnitControl unidadActual;
@@ -39,11 +39,20 @@ public class IAPlayer : MonoBehaviour
         //foreach(IA_UnitControl unidad in todos) 
         for(int i=0; i<todos.Length; i++)
         {
-            if(todos[i].unit.tipoUnidad=="rey" && todos[i].unit.playerNumber==1)
-                jugadorRey = todos[i];
-            else if(todos[i].unit.tipoUnidad=="rey" && todos[i].unit.playerNumber==2)
+            //if(todos[i].unit.tipoUnidad=="rey" && todos[i].unit.playerNumber==1)
+            //    jugadorRey = todos[i];
+            if(todos[i].unit.tipoUnidad=="rey" && todos[i].unit.playerNumber==2)
                 iaRey = todos[i];
         }
+        //Encontrar al rey del jugador
+        Unit [] listaUnidades = FindObjectsOfType<Unit>();
+        for(int i=0; i<listaUnidades.Length; i++)
+        {
+            if(listaUnidades[i].tipoUnidad=="rey" && listaUnidades[i].playerNumber==1)
+                jugadorRey = listaUnidades[i];
+            
+        }
+
         
         cuentaTurno = 0;
     }
@@ -234,6 +243,13 @@ public class IAPlayer : MonoBehaviour
                     unidadActual.casillaObjetivoTurno = tilo;
                     ordenesUnidad[cuentaOrden++] = "Mover";
                     DecidirEnemigo("");
+                    ordenesUnidad[cuentaOrden++] = "Atacar";
+
+                }
+                else //Al no haber enemigos cercanos, decide ir a atacar al rey
+                {
+                    unidadActual.nombreObjetivo="Quiero_AtacarRey";
+                    EstrategiaUnidad();
                 }
             }
             
@@ -242,8 +258,31 @@ public class IAPlayer : MonoBehaviour
         }
         else if(unidadActual.nombreObjetivo=="Quiero_AtacarRey" || unidadActual.nombreObjetivo=="Estoy_AtacandoRey")
         {
-            MuestraConsola( "Busca atacar al rey enemigo\n"+
-                            "Sin código todavía para esto");
+            MuestraConsola( "Busca atacar al rey enemigo");
+            if(unidadActual.unidadObjetivoTurno==jugadorRey && 
+            gm.calculaDistancia(unidadActual.unit, unidadActual.unidadObjetivoTurno) <= unidadActual.unit.attackRadius)
+            {
+                //unidadActual.unit.Attack(unidadActual.enemigoObjetivoTurno);
+                ordenesUnidad[cuentaOrden++] = "Atacar";
+            }
+            else
+            {
+                Tile tilo = unidadActual.unit.ComprobarEnemigoAlcanzable();
+                if(tilo!=null)
+                {
+                    unidadActual.casillaObjetivoTurno = tilo;
+                    ordenesUnidad[cuentaOrden++] = "Mover";
+                    DecidirEnemigo("");
+                    //ordenesUnidad[cuentaOrden++] = "Atacar";
+
+                }
+                else //Al no haber enemigos cercanos, decide ir a atacar al rey
+                {
+                    ordenesUnidad[cuentaOrden++] = "PathFindingHaciaUnidad";
+                    unidadActual.unidadObjetivoTurno = jugadorRey;
+                }
+            }
+
 
             
         }
@@ -292,6 +331,19 @@ public class IAPlayer : MonoBehaviour
             unidadActual.unidadObjetivoTurno = enemigoMasCercano;
         }
 
+        else if(info == "El rey enemigo")
+        {
+            foreach(Unit enemigo in unidadActual.unit.enemiesInRange)
+            {
+                if(enemigo.tipoUnidad == "rey")
+                {
+                    ordenesUnidad[cuentaOrden++] = "Atacar";
+                    unidadActual.unidadObjetivoTurno = enemigo;
+                    break;
+                }
+            }
+        }
+
         //En caso de que se quiera atacar al enemigo más cercano a la unidad
         else
         {
@@ -323,6 +375,7 @@ public class IAPlayer : MonoBehaviour
         }
     }
 
+    // Para_presentar parte 3: el orden de las acciones
     public void SiguienteAccionUnidad()
     {
         if(cuentaOrden>=2 || ordenesUnidad[cuentaOrden]=="Nada")

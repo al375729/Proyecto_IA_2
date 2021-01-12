@@ -525,6 +525,7 @@ GameObject:
   - component: {fileID: 3831706681586816675}
   - component: {fileID: 586296992}
   - component: {fileID: 3491280932149361788}
+  - component: {fileID: 4738496155814229627}
   m_Layer: 9
   m_Name: Blue Bat
   m_TagString: Untagged
@@ -756,4 +757,16 @@ MonoBehaviour:
   esRey: 0
   tileObjetivo: {fileID: 0}
   casillaObjetivoTurno: {fileID: 0}
-  enemigoObjetivoTurno: {fileID: 0}
+  unidadObjetivoTurno: {fileID: 0}
+--- !u!114 &4738496155814229627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3831706681586816672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0928160f57b7b7f42bde60fbb362126f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -522,7 +522,6 @@ GameObject:
   - component: {fileID: 794876514}
   - component: {fileID: 1771498148}
   - component: {fileID: 1562438027}
-  - component: {fileID: 11499172008528598}
   m_Layer: 9
   m_Name: Dark Knight
   m_TagString: Untagged
@@ -739,19 +738,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &11499172008528598
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4446637798450979530}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0928160f57b7b7f42bde60fbb362126f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  contenedorGrid: {fileID: 0}
 --- !u!1 &4446637799418178266
 GameObject:
   m_ObjectHideFlags: 0

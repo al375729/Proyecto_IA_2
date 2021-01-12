@@ -14,13 +14,17 @@ public class IA_UnitControl : MonoBehaviour
     public Unit unidadObjetivoTurno = null;
 
     //Para utilizar el pathfinding
-    private IA_UnitPathFind pathFind;
+    public IA_UnitPathFind pathFind;
+    private GM gm;
+
 
     void Awake()
     {
         unit = GetComponent<Unit>();
         pathFind = GetComponent<IA_UnitPathFind>();
         esRey = unit.isKing;
+
+        gm = FindObjectOfType<GM>();
     }
 
     public string identifica(int num)
@@ -42,7 +46,8 @@ public class IA_UnitControl : MonoBehaviour
 
     public void AcabarPathFinding()
     {
-
+        unit.hasMoved = true;
+        gm.AcabarAccionUnidadIA();
     }
 
     

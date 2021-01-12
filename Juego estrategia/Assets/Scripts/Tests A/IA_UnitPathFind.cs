@@ -82,6 +82,7 @@ public class IA_UnitPathFind : MonoBehaviour {
 		if (pathSuccessful) {
 			path = newPath;
 			targetIndex = 0;
+			speed = GetComponent<Unit>().tileSpeed;
 			StopCoroutine("FollowPath");
 			StartCoroutine("FollowPath");
 		}
@@ -105,6 +106,8 @@ public class IA_UnitPathFind : MonoBehaviour {
 
 		}
 
+		//Cuando se acaba el desplazamiento
+		unitControl.AcabarPathFinding();
 
 	}
 
