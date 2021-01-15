@@ -16,7 +16,8 @@ public class Node : IHeapItem<Node> {
 	
 	public Node(bool _walkable, Vector3 _worldPos, int _gridX, int _gridY, int _penalty) {
 		walkable = _walkable;
-		worldPosition = _worldPos;
+		//worldPosition = _worldPos;
+		worldPosition = new Vector3(_worldPos.x, _worldPos.y, 0);
 		gridX = _gridX;
 		gridY = _gridY;
 		movementPenalty = _penalty;

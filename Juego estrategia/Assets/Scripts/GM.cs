@@ -238,17 +238,25 @@ public class GM : MonoBehaviour
                 if(tileRandom.isCreatable==true)
                     break;
 
-                else if(i==5)
+                /*else if(i==5)
                 {
                     //Se cancela la compra para no bloquear el código en un bucle
                     Debug.Log("Se cancela la compra");
                     player2Gold += createdUnit.cost;
                     return;
-                }
+                }*/
 
                 
             }
-            tileRandom.OnMouseDown();
+            if(tileRandom.isCreatable==true)
+                tileRandom.OnMouseDown();
+            else
+            {
+                //Se cancela la compra para no bloquear el código en un bucle
+                    Debug.Log("Se cancela la compra");
+                    player2Gold += createdUnit.cost;
+                    AcabarAccionUnidadIA();
+            }
         }
     }
 

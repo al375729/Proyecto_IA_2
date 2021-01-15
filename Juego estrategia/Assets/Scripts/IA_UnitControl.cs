@@ -47,6 +47,10 @@ public class IA_UnitControl : MonoBehaviour
     public void AcabarPathFinding()
     {
         unit.hasMoved = true;
+        unit.PintarInfluencia(true);
+        unit.ResetWeaponIcon();
+        unit.GetEnemies(null);
+        gm.MoveInfoPanel(unit);
         gm.AcabarAccionUnidadIA();
     }
 
