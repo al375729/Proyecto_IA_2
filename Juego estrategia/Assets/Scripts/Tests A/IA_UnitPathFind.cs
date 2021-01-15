@@ -96,13 +96,24 @@ public class IA_UnitPathFind : MonoBehaviour {
 			if (transform.position == currentWaypoint) {
 				targetIndex ++;
 				if (targetIndex >= maxPasos-1 || targetIndex >= path.Length) {
-					yield break;
+					//yield break;
+					break;
 				}
 				currentWaypoint = path[targetIndex];
 			}
 
 			transform.position = Vector3.MoveTowards(transform.position,currentWaypoint,speed * Time.deltaTime);
 			yield return null;
+			/*
+			if (transform.position.x != currentWaypoint.x) { // first aligns him with the new tile's x pos
+            transform.position = Vector2.MoveTowards(transform.position, new Vector2(currentWaypoint.x, transform.position.y), speed * Time.deltaTime);
+            yield return null;
+			}
+			else if (transform.position.y != currentWaypoint.y) // then y
+			{
+				transform.position = Vector2.MoveTowards(transform.position, new Vector2(transform.position.x, currentWaypoint.y), speed * Time.deltaTime);
+				yield return null;
+			}*/
 
 		}
 

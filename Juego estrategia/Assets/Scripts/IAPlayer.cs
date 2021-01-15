@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+//using System.Random;
 
 public class IAPlayer : MonoBehaviour
 {
@@ -29,9 +30,21 @@ public class IAPlayer : MonoBehaviour
     //Para controlar lo que se muestra por la consola
     int cuentaTurno;
 
+    //Para acceder a la compra de unidades
+    CharacterCreation creaPersonajes;
+    public Unit caballero;
+    public Unit arquero;
+    public Unit dragon;
+    public Village aldea;
+
+    bool intentoCompraRealizado;
+
     void Start()
     {
         gm = FindObjectOfType<GM>();
+        creaPersonajes = FindObjectOfType<CharacterCreation>();
+        intentoCompraRealizado = false;
+
         EstrategiaIA = "Neutral";
 
         //Recoger todas las unidades en el inicio
@@ -59,8 +72,10 @@ public class IAPlayer : MonoBehaviour
 
     public void TurnoIA()
     {
+        intentoCompraRealizado = false;
         cuentaTurno++;
         Debug.Log("----------TURNO "+cuentaTurno+" DE LA IA ----------");
+
         //Recoger todas las unidades del juego y trabajar sólo con
         todos = FindObjectsOfType<IA_UnitControl>();
         cuentaUnidad = 0;
@@ -82,10 +97,44 @@ public class IAPlayer : MonoBehaviour
 
     }
 
+    public void CompraUnidades()
+    {
+        //Random rnd = new Random();
+        int seleccionRandom = Random.Range(0,5);
+        switch(seleccionRandom)
+        {
+            default:
+                Debug.Log("Se decide no comprar nada");
+                return;
+            case 1: //Se selecciona al caballero
+                Debug.Log("Trata de comprar un caballero");
+                creaPersonajes.BuyUnit(caballero);
+                break;
+            case 2: //Se selecciona al arquero
+                Debug.Log("Trata de comprar un arquero");
+                creaPersonajes.BuyUnit(arquero);
+                break;
+            case 3: //Se selecciona al dragón
+                Debug.Log("Trata de comprar un dragón");
+                creaPersonajes.BuyUnit(dragon);
+                break;
+            case 4: //Se selecciona la aldea
+                Debug.Log("Trata de comprar un dragón");
+                break;
+
+        }
+    }
+
     public void SiguienteUnidad()
     {
         if(cuentaUnidad>=todos.Length || todos[cuentaUnidad]==null)
         {
+            //Antes de acabar el turno, trata de comprar nuevas unidades
+            if(!intentoCompraRealizado)
+            {
+                intentoCompraRealizado = true;
+                CompraUnidades();
+            }
             Debug.Log("La IA ha acabado el turno "+cuentaTurno+", le toca al jugador");
             gm.EndTurn();
         }

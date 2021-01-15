@@ -62,11 +62,15 @@ public class Tile : MonoBehaviour
     }
 
     public void SetCreatable() {
-        rend.color = creatableColor;
+
+        //Sólo se cambia de color si lo maneja el jugador
+        if(gm.playerTurn==1)
+            rend.color = creatableColor;
         isCreatable = true;
     }
 
-   private void OnMouseDown()
+    //Se ha hecho publico este método para que gm acceda a él a la hora de comprar unidades de la IA
+   public void OnMouseDown()
     {
         //Después de seleccionar el personaje y que resalten los tiles alcanzables,
         //pulsamos en uno de éstos para que vaya hacia él
@@ -75,16 +79,37 @@ public class Tile : MonoBehaviour
             gm.selectedUnit.Move(this.transform);
 
             //Para cuando se quiera spawnear una unidad ya seleccionada del menú
-        } else if (isCreatable == true && gm.createdUnit != null) {
+        } else if (isCreatable == true && gm.createdUnit != null 
+            && ((gm.createdUnit.playerNumber == 1 && gm.createdUnit.cost <= gm.player1Gold) 
+            || (gm.createdUnit.playerNumber == 2 && gm.createdUnit.cost <= gm.player2Gold))) {
+
             Unit unit = Instantiate(gm.createdUnit, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
             //Nada más añadirlo, se pinta el mapa de influencia
-            unit.PintarInfluencia(true);
+            //unit.PintarInfluencia(true);
             //Si es una unidad de la IA, se añade a la lista del IAPlayer
             unit.hasMoved = true;
             unit.hasAttacked = true;
             gm.ResetTiles();
-            gm.createdUnit = null;
 
+            //Se realiza el pago por la creación de la unidad
+            if(gm.createdUnit.playerNumber == 1)  gm.player1Gold -= gm.createdUnit.cost;
+            else                                  gm.player2Gold -= gm.createdUnit.cost;
+
+            gm.UpdateGoldText();
+
+            //Comprando unidades para la IA:
+            //Si aun queda suficiente dinero, se compra otra figura más
+            if(gm.playerTurn==2 && gm.player2Gold >= gm.createdUnit.cost)
+                gm.CrearUnidadIA();
+            else
+            {
+                gm.createdUnit = null;
+                if(gm.playerTurn==2)
+                    gm.AcabarAccionUnidadIA();
+            }
+
+
+            
             //Para cua
         } else if (isCreatable == true && gm.createdVillage != null) {
             Instantiate(gm.createdVillage, new Vector3(transform.position.x, transform.position.y, 0) , Quaternion.identity);

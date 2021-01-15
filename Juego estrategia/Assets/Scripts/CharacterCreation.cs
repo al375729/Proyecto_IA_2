@@ -14,9 +14,13 @@ public class CharacterCreation : MonoBehaviour
     public GameObject player1Menu;
     public GameObject player2Menu;
 
+    //Para que la IA detecte que ya puede seleccionar tiles para crear
+    //public bool tilesPreparados;
+
 
     private void Start()
     {
+        //tilesPreparados = false;
         gm = FindObjectOfType<GM>();
     }
 
@@ -48,17 +52,17 @@ public class CharacterCreation : MonoBehaviour
         if (unit.playerNumber == 1 && unit.cost <= gm.player1Gold)
         {
             player1Menu.SetActive(false);
-            gm.player1Gold -= unit.cost;
+            //gm.player1Gold -= unit.cost;  //El pago se realizará después de colocar la unidad
         } else if (unit.playerNumber == 2 && unit.cost <= gm.player2Gold)
         {
             player2Menu.SetActive(false);
-            gm.player2Gold -= unit.cost;
+            //gm.player2Gold -= unit.cost;
         } else {
             print("NOT ENOUGH GOLD, SORRY!");
             return;
         }
 
-        gm.UpdateGoldText();
+        //gm.UpdateGoldText();
         gm.createdUnit = unit;
 
         DeselectUnit();
@@ -101,6 +105,8 @@ public class CharacterCreation : MonoBehaviour
                 tile.SetCreatable();
             }
         }
+
+        if(gm.playerTurn==2)    gm.CrearUnidadIA();
     }
 
     void DeselectUnit() {

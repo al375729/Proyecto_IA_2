@@ -218,6 +218,40 @@ public class GM : MonoBehaviour
         iaPlayer.SiguienteAccionUnidad();
     }
 
+    public void AcabarCreacionUnidad()
+    {
+        //FindObjectOfType<CharacterCreation>().tilesPreparados = false;
+    }
+
+    public void CrearUnidadIA()
+    {
+        if(createdUnit!=null)
+        {
+            Debug.Log("Se busca un tile donde spawnear la unidad comprada");
+            int filas = matrizTile.GetLength(0);
+            int columnas = matrizTile.GetLength(1);
+            Tile tileRandom = matrizTile[0,0];  //Le asigno valor para que no de errores el código
+            for(int i=0; i<=5; i++)
+            {
+                Debug.Log("Prueba de tile "+i+1);
+                tileRandom = matrizTile[Random.Range(0,filas),Random.Range(0,columnas)];
+                if(tileRandom.isCreatable==true)
+                    break;
+
+                else if(i==5)
+                {
+                    //Se cancela la compra para no bloquear el código en un bucle
+                    Debug.Log("Se cancela la compra");
+                    player2Gold += createdUnit.cost;
+                    return;
+                }
+
+                
+            }
+            tileRandom.OnMouseDown();
+        }
+    }
+
     //Para realizar más eficientemente los cálculos de distancia entre unidades
     public float calculaDistancia(Unit unidad, Unit enemigo)
     {
