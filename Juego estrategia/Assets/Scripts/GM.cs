@@ -203,6 +203,36 @@ public class GM : MonoBehaviour
         createdUnit = null;
     }
 
+    //Para que la IA sólo pueda finalizar sus turnos y no los del jugador
+    public void EndIATurn()
+    {
+        source.Play();
+        camAnim.SetTrigger("shake");
+
+        // deselects the selected unit when the turn ends
+        if (selectedUnit != null) {
+            selectedUnit.ResetWeaponIcon();
+            selectedUnit.isSelected = false;
+            selectedUnit = null;
+        }
+
+        ResetTiles();
+
+        Unit[] units = FindObjectsOfType<Unit>();
+        foreach (Unit unit in units) {
+            unit.hasAttacked = false;
+            unit.hasMoved = false;
+            unit.ResetWeaponIcon();
+        }
+
+        playerIcon.sprite = playerOneIcon;
+        playerTurn = 1; 
+
+        GetGoldIncome(playerTurn);
+        GetComponent<CharacterCreation>().CloseCharacterCreationMenus();
+        createdUnit = null;
+    }
+
     //Si la unidad realiza una acción (Mover/Atacar) y es de la IA,
     //el gm notifica a IAPlayer que esa unidad debe continuar con otra acción
     public void AcabarAccionUnidadIA()
@@ -233,6 +263,45 @@ public class GM : MonoBehaviour
             Tile tileRandom = matrizTile[0,0];  //Le asigno valor para que no de errores el código
             for(int i=0; i<=5; i++)
             {
+                int randomColumna = Random.Range(0,columnas);
+                int randomFila = Random.Range(0,filas);
+                Debug.Log("Prueba de tile ["+randomFila+","+randomColumna+"]");
+                tileRandom = matrizTile[randomFila,randomColumna];
+                if(tileRandom.isCreatable==true)
+                    break;
+
+                /*else if(i==5)
+                {
+                    //Se cancela la compra para no bloquear el código en un bucle
+                    Debug.Log("Se cancela la compra");
+                    player2Gold += createdUnit.cost;
+                    return;
+                }*/
+
+                
+            }
+            if(tileRandom.isCreatable==true)
+                tileRandom.OnMouseDown();
+            else
+            {
+                //Se cancela la compra para no bloquear el código en un bucle
+                    Debug.Log("Se cancela la compra");
+                    player2Gold += createdUnit.cost;
+                    AcabarAccionUnidadIA();
+            }
+        }
+    }
+
+    public void CrearAldeaIA()
+    {
+        if(createdVillage!=null)
+        {
+            Debug.Log("Se busca un tile donde spawnear la unidad comprada");
+            int filas = matrizTile.GetLength(0);
+            int columnas = matrizTile.GetLength(1);
+            Tile tileRandom = matrizTile[0,0];  //Le asigno valor para que no de errores el código
+            for(int i=0; i<=5; i++)
+            {
                 Debug.Log("Prueba de tile "+i+1);
                 tileRandom = matrizTile[Random.Range(0,filas),Random.Range(0,columnas)];
                 if(tileRandom.isCreatable==true)
@@ -254,7 +323,7 @@ public class GM : MonoBehaviour
             {
                 //Se cancela la compra para no bloquear el código en un bucle
                     Debug.Log("Se cancela la compra");
-                    player2Gold += createdUnit.cost;
+                    player2Gold += createdVillage.cost;
                     AcabarAccionUnidadIA();
             }
         }

@@ -48,53 +48,69 @@ public class CharacterCreation : MonoBehaviour
     }
 
     public void BuyUnit (Unit unit) {
-
+        bool compra = false;
         if (unit.playerNumber == 1 && unit.cost <= gm.player1Gold)
         {
             player1Menu.SetActive(false);
+            compra = true;
             //gm.player1Gold -= unit.cost;  //El pago se realizará después de colocar la unidad
         } else if (unit.playerNumber == 2 && unit.cost <= gm.player2Gold)
         {
+            compra = true;
             player2Menu.SetActive(false);
             //gm.player2Gold -= unit.cost;
-        } else {
+        } 
+        if(compra)
+        {
+            //gm.UpdateGoldText();
+            gm.createdUnit = unit;
+
+            DeselectUnit();
+            SetCreatableTiles("unidad");
+        }
+        else {
             print("NOT ENOUGH GOLD, SORRY!");
-            return;
+            if(gm.playerTurn==1)    return;
+            else                    gm.AcabarAccionUnidadIA();
         }
 
-        //gm.UpdateGoldText();
-        gm.createdUnit = unit;
-
-        DeselectUnit();
-        SetCreatableTiles();
+        
     }
 
     public void BuyVillage(Village village) {
+        bool compra = false;
         if (village.playerNumber == 1 && village.cost <= gm.player1Gold)
         {
+            compra = true;
             player1Menu.SetActive(false);
-            gm.player1Gold -= village.cost;
+            //gm.player1Gold -= village.cost;
         }
         else if (village.playerNumber == 2 && village.cost <= gm.player2Gold)
         {
+            compra = true;
             player2Menu.SetActive(false);
-            gm.player2Gold -= village.cost;
+            //gm.player2Gold -= village.cost;
         }
-        else
+        
+        if(compra)
         {
-            print("NOT ENOUGH GOLD, SORRY!");
-            return;
-        }
-        gm.UpdateGoldText();
+            //gm.UpdateGoldText();
         gm.createdVillage = village;
 
         DeselectUnit();
 
-        SetCreatableTiles();
-
+        SetCreatableTiles("aldea");
+        }
+        else
+        {
+            print("NOT ENOUGH GOLD, SORRY!");
+            if(gm.playerTurn==1)    return;
+            else                    gm.AcabarAccionUnidadIA();
+        }
+        
     }
 
-    void SetCreatableTiles() {
+    void SetCreatableTiles(string elemento) {
         gm.ResetTiles();
 
         Tile[] tiles = FindObjectsOfType<Tile>();
@@ -106,7 +122,11 @@ public class CharacterCreation : MonoBehaviour
             }
         }
 
-        if(gm.playerTurn==2)    gm.CrearUnidadIA();
+        if(gm.playerTurn==2)
+        {
+            if(elemento=="unidad")      gm.CrearUnidadIA();
+            else if(elemento=="aldea")  gm.CrearAldeaIA();
+        }
     }
 
     void DeselectUnit() {

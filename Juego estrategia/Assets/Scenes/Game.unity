@@ -73021,7 +73021,7 @@ MonoBehaviour:
   caballero: {fileID: 1888838832, guid: e4ad95c761a65f243b449f1e95d0c00e, type: 3}
   arquero: {fileID: 626269173632994736, guid: dfd3953b532394b459bb5b605feb9936, type: 3}
   dragon: {fileID: 3831706681586816701, guid: 0f0a2447a78d86143a35917ac0efe6e7, type: 3}
-  aldea: {fileID: 0}
+  aldea: {fileID: 4905471955937416695, guid: 76ee34c1b9be29f4ebb1071fbfe8504a, type: 3}
 --- !u!1 &1574092191 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7677967910336022200, guid: d0745185e498645d1b87c30c3d4a70aa,

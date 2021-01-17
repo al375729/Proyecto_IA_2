@@ -61,6 +61,21 @@ public class InfluTile : MonoBehaviour
 
     }
 
+    public void PintarInfluencia(Village aldea, bool sumar)
+    {
+        float cantidad = aldea.factorInfluencia / (Mathf.Abs(aldea.transform.position.x - transform.position.x) + Mathf.Abs(aldea.transform.position.y - transform.position.y));
+        if (cantidad < 1)    return;
+
+        //Sumar: true -> pintar influencia; false -> restar influencia
+        if(!sumar)  cantidad = -cantidad;
+
+        //Unidades del jugador
+        if(aldea.playerNumber==1)
+            jugAldea += cantidad;
+        else
+            iaAldea += cantidad;
+    }
+
     //Cuando IAPlayer pida la suma de las influencias en la casilla
     public float getSumaInfluenciaAliada()
     {

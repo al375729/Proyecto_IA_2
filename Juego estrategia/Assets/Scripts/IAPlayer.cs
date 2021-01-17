@@ -105,6 +105,7 @@ public class IAPlayer : MonoBehaviour
         {
             default:
                 Debug.Log("Se decide no comprar nada");
+                SiguienteUnidad();
                 return;
             case 1: //Se selecciona al caballero
                 Debug.Log("Trata de comprar un caballero");
@@ -119,7 +120,8 @@ public class IAPlayer : MonoBehaviour
                 creaPersonajes.BuyUnit(dragon);
                 break;
             case 4: //Se selecciona la aldea
-                Debug.Log("Trata de comprar un dragón");
+                Debug.Log("Trata de comprar una aldea");
+                creaPersonajes.BuyVillage(aldea);
                 break;
 
         }
@@ -135,8 +137,14 @@ public class IAPlayer : MonoBehaviour
                 intentoCompraRealizado = true;
                 CompraUnidades();
             }
-            Debug.Log("La IA ha acabado el turno "+cuentaTurno+", le toca al jugador");
-            gm.EndTurn();
+            else
+            {
+                Debug.Log("La IA ha acabado el turno "+cuentaTurno+", le toca al jugador");
+                todos = FindObjectsOfType<IA_UnitControl>(); //Es posible que alguna unidad ha muerto
+                foreach(IA_UnitControl uc in todos)
+                    uc.unit.StopAllCoroutines();
+                gm.EndIATurn();
+            }
         }
         else
         {

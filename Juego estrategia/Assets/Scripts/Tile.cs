@@ -114,7 +114,24 @@ public class Tile : MonoBehaviour
         } else if (isCreatable == true && gm.createdVillage != null) {
             Instantiate(gm.createdVillage, new Vector3(transform.position.x, transform.position.y, 0) , Quaternion.identity);
             gm.ResetTiles();
-            gm.createdVillage = null;
+
+            //Se realiza el pago por la creación de la unidad
+            if(gm.createdUnit.playerNumber == 1)  gm.player1Gold -= gm.createdUnit.cost;
+            else                                  gm.player2Gold -= gm.createdUnit.cost;
+
+            gm.UpdateGoldText();
+
+            //Comprando unidades para la IA:
+            //Si aun queda suficiente dinero, se compra otra figura más
+            if(gm.playerTurn==2 && gm.player2Gold >= gm.createdUnit.cost)
+                gm.CrearAldeaIA();
+            else
+            {
+                gm.createdVillage = null;
+                if(gm.playerTurn==2)
+                    gm.AcabarAccionUnidadIA();
+            }
+            
         }
     }
 
