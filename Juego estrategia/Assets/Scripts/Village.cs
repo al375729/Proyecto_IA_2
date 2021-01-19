@@ -13,6 +13,7 @@ public class Village : MonoBehaviour
 
     //Variable por la cual se pintará la influencia
     public int factorInfluencia = 3;
+    public int health;
 
     public Tile tilePosicion;
 

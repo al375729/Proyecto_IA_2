@@ -4777,7 +4777,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5054,6 +5053,9 @@ MonoBehaviour:
   goldPerTurn: 10
   playerNumber: 1
   cost: 100
+  factorInfluencia: 3
+  health: 5
+  tilePosicion: {fileID: 0}
 --- !u!1 &8027371607595116935
 GameObject:
   m_ObjectHideFlags: 0

@@ -116,14 +116,14 @@ public class Tile : MonoBehaviour
             gm.ResetTiles();
 
             //Se realiza el pago por la creación de la unidad
-            if(gm.createdUnit.playerNumber == 1)  gm.player1Gold -= gm.createdUnit.cost;
-            else                                  gm.player2Gold -= gm.createdUnit.cost;
+            if(gm.createdVillage.playerNumber == 1)     gm.player1Gold -= gm.createdVillage.cost;
+            else                                        gm.player2Gold -= gm.createdVillage.cost;
 
             gm.UpdateGoldText();
 
             //Comprando unidades para la IA:
             //Si aun queda suficiente dinero, se compra otra figura más
-            if(gm.playerTurn==2 && gm.player2Gold >= gm.createdUnit.cost)
+            if(gm.playerTurn==2 && gm.player2Gold >= gm.createdVillage.cost)
                 gm.CrearAldeaIA();
             else
             {

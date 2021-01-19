@@ -385,7 +385,7 @@ public class Unit : MonoBehaviour
                     { // how far he can move
                         if (tile.isClear() == true)
                         { // is the tile clear from any obstacles
-                          // desde este tile, comprobar si hay un enemigo alcanzable
+                          // desde este tile, comprobar si el rey es alcanzable
                           float influRey = tile.influTile.getInfluenciaReyAliado();
                           if(influRey!=Mathf.Infinity && influRey > influReyMax)
                           {
@@ -398,6 +398,11 @@ public class Unit : MonoBehaviour
                 }
 
         return tile_proteger;
+    }
+    //La unidad ataca a una villa enemiga
+    public void Attack(Village aldea)
+    {
+
     }
 
     // La unidad seleccionada por GM ataca a la seleccionada en OnMouseDown (enemy)

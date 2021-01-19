@@ -15,7 +15,7 @@ public class IAPlayer : MonoBehaviour
     public IA_UnitControl unidadActual;
 
     //Cantidad de influencia que tiene que recibir el rey de las unidades enemigas
-    public float minSumaInfluenciaAliada = 3f;
+    public float minSumaInfluenciaAliada = 4f;
 
     //Para las ordenes en SiguienteAccionUnidad
     //Posibles valores: "Mover","Atacar","Nada", "PathFindingHaciaTile", "PathFindingHaciaUnidad"
@@ -197,6 +197,15 @@ public class IAPlayer : MonoBehaviour
         
         //Comprobar la suma de influencias de unidades aliadas que recibe 
         float influenciaActual = unidadActual.unit.tilePosicion.influTile.getSumaInfluenciaAliada();
+        
+        //Comprobar si tiene un enemigo alcanzable
+        //Si lo tiene y no carece de vida, le ataca
+        DecidirEnemigo("");
+        if(unidadActual.unidadObjetivoTurno!=null && unidadActual.unit.health > 5)
+        {
+            ordenesUnidad[cuentaOrden++] = "Atacar";
+        }
+        
         MuestraConsola("Influencia del tile actual:"+influenciaActual);
         if(influenciaActual < minSumaInfluenciaAliada)
         {
@@ -209,8 +218,18 @@ public class IAPlayer : MonoBehaviour
             ordenesUnidad[cuentaOrden++] = "Mover";
             //Si sigue sin ser suficiente, mantener "Quiero_Protegerme"
             influenciaActual = ir_a_tile.influTile.getSumaInfluenciaAliada();
-            if(influenciaActual >= minSumaInfluenciaAliada)
+            
+        }
+
+        //Esto se ejecuta tanto si el if anterior se ejecuta o no
+        if(influenciaActual >= minSumaInfluenciaAliada)
                 unidadActual.nombreObjetivo = "Estoy_Protegido";
+        
+        //Si sigue sin tener suficiente protección y, además, detecta influencia enemiga, trata de conseguir a más protectores
+        else if(unidadActual.unit.tilePosicion.influTile.getSumaInfluenciaEnemiga() > 3f)
+        {
+            foreach(IA_UnitControl unidad in todos)
+                if(unidad!=iaRey)   DecidirEstrategiaUnidad("Descartar_Quiero_AtacarEnemigos");
         }
 
         MuestraConsola("Realizará: 1º: "+ordenesUnidad[0]+"; 2º: "+ordenesUnidad[1]);
@@ -234,14 +253,32 @@ public class IAPlayer : MonoBehaviour
             MuestraConsola("Busca proteger al rey");
             if(iaRey.nombreObjetivo=="Estoy_Protegido")
             {
-                if(unidadActual.nombreObjetivo=="Quiero_DefenderRey" || unidadActual.unit.tilePosicion.influTile.iaRey<1)
+                if(unidadActual.unit.tilePosicion.influTile.iaRey>1)
+                    unidadActual.nombreObjetivo = "Estoy_DefendiendoRey";
+                    
+                if(unidadActual.nombreObjetivo=="Quiero_DefenderRey")// || unidadActual.unit.tilePosicion.influTile.iaRey<=0)
                 {
-                    MuestraConsola(" decide cambiar de estrategia");
-                    DecidirEstrategiaUnidad("Descarta_Quiero_DefenderRey");
-                    EstrategiaUnidad();
+                    
+
+                    //Si no recibe influencia del rey, decide moverse para permanecer cerca suyo
+                    //Si no lo tiene cerca, entonces cambia de estrategia
+                    Tile tilo = unidadActual.unit.ComprobarReyAliadoAlcanzable();
+                    if(tilo==null)
+                    {
+                        MuestraConsola(" decide cambiar de estrategia");
+                        DecidirEstrategiaUnidad("Descarta_Quiero_DefenderRey");
+                        EstrategiaUnidad();
+                    }
+                    else
+                    {
+                        unidadActual.casillaObjetivoTurno = tilo;
+                        ordenesUnidad[cuentaOrden++] = "Mover";
+                        MuestraConsola(" decide acercarse más hacia el rey");
+                    }
                 }
                 else
                 {
+                    
                     //Comprobar si hay enemigos cerca
                     //Si los hay: moverse hacia el más cercano y atacarle
                     //Si no los hay: quedarse en el sitio y no moverse
@@ -532,7 +569,7 @@ public class IAPlayer : MonoBehaviour
                     else if(este.playerNumber ==1 && este.isKing)
                         distanciaReyJug = distancia;
 
-                    else if(este.playerNumber ==1 && distancia < distanciaEnemigoMasCercano)
+                    else if(este.playerNumber ==1 && info!="Descartar_Quiero_AtacarEnemigos" && distancia < distanciaEnemigoMasCercano)
                             distanciaEnemigoMasCercano = distancia;
                     
                 }

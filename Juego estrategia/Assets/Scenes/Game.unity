@@ -107971,11 +107971,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1748344637}
     m_Modifications:
-    - target: {fileID: 7767452285256654377, guid: da3435065a89e2442b5138b621f7826c,
-        type: 3}
-      propertyPath: m_Materials.Array.size
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7767452286446655037, guid: da3435065a89e2442b5138b621f7826c,
         type: 3}
       propertyPath: m_Name
@@ -108246,11 +108241,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Blue Village
-      objectReference: {fileID: 0}
-    - target: {fileID: 4688297138920293806, guid: 76ee34c1b9be29f4ebb1071fbfe8504a,
-        type: 3}
-      propertyPath: m_Materials.Array.size
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 76ee34c1b9be29f4ebb1071fbfe8504a, type: 3}
