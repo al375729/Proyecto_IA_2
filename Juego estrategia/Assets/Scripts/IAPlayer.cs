@@ -324,7 +324,7 @@ public class IAPlayer : MonoBehaviour
                 DecidirEnemigo("");
 
             if(unidadActual.unidadObjetivoTurno!=null && 
-            gm.calculaDistancia(unidadActual.unit, unidadActual.unidadObjetivoTurno) <= unidadActual.unit.attackRadius)
+            gm.calculaDistancia(unidadActual.unit.transform, unidadActual.unidadObjetivoTurno.transform) <= unidadActual.unit.attackRadius)
             {
                 //unidadActual.unit.Attack(unidadActual.enemigoObjetivoTurno);
                 ordenesUnidad[cuentaOrden++] = "Atacar";
@@ -354,7 +354,7 @@ public class IAPlayer : MonoBehaviour
         {
             MuestraConsola( "Busca atacar al rey enemigo");
             if(unidadActual.unidadObjetivoTurno==jugadorRey && 
-            gm.calculaDistancia(unidadActual.unit, unidadActual.unidadObjetivoTurno) <= unidadActual.unit.attackRadius)
+            gm.calculaDistancia(unidadActual.unit.transform, unidadActual.unidadObjetivoTurno.transform) <= unidadActual.unit.attackRadius)
             {
                 //unidadActual.unit.Attack(unidadActual.enemigoObjetivoTurno);
                 ordenesUnidad[cuentaOrden++] = "Atacar";
@@ -390,7 +390,7 @@ public class IAPlayer : MonoBehaviour
     {
         //Si ya tiene un enemigo definido y es alcanzable en el momento, continua como enemigo a atacar
         if(unidadActual.unidadObjetivoTurno!=null && 
-        gm.calculaDistancia(unidadActual.unit, unidadActual.unidadObjetivoTurno) <= unidadActual.unit.attackRadius)
+        gm.calculaDistancia(unidadActual.unit.transform, unidadActual.unidadObjetivoTurno.transform) <= unidadActual.unit.attackRadius)
         {
             //unidadActual.unit.Attack(unidadActual.enemigoObjetivoTurno);
             //ordenesUnidad[cuentaOrden++] = "Atacar";
@@ -413,7 +413,7 @@ public class IAPlayer : MonoBehaviour
             float distanciaEnemigoMasCercano = Mathf.Infinity;
             foreach(Unit enemigo in unidadActual.unit.enemiesInRange)
             {
-                float distanciaEnemigo = gm.calculaDistancia(iaRey.unit,enemigo);
+                float distanciaEnemigo = gm.calculaDistancia(iaRey.unit.transform,enemigo.transform);
                 if(enemigoMasCercano==null || distanciaEnemigo<distanciaEnemigoMasCercano)
                 {
                     enemigoMasCercano = enemigo;
@@ -445,7 +445,7 @@ public class IAPlayer : MonoBehaviour
             float distanciaEnemigoMasCercano = Mathf.Infinity;
             foreach(Unit enemigo in unidadActual.unit.enemiesInRange)
             {
-                float distanciaEnemigo = gm.calculaDistancia(unidadActual.unit,enemigo);
+                float distanciaEnemigo = gm.calculaDistancia(unidadActual.unit.transform,enemigo.transform);
                 if(enemigoMasCercano==null || distanciaEnemigo<distanciaEnemigoMasCercano)
                 {
                     enemigoMasCercano = enemigo;

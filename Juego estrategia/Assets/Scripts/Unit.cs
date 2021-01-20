@@ -20,6 +20,8 @@ public class Unit : MonoBehaviour
     public bool hasAttacked;
     //Lista de los enemigos atacables en ese momento
     public List<Unit> enemiesInRange = new List<Unit>();
+    //Lista de los enemigos atacables en ese momento
+    public List<Village> enemyVillagesInRange = new List<Village>();
 
     public int playerNumber;
 
@@ -142,7 +144,7 @@ public class Unit : MonoBehaviour
                     Tile tile = gm.matrizTile[i,j];
                     //El tile tiene que ser alcanzable
                     
-                    if (gm.calculaDistancia(this,tile.transform) <= tileSpeed)
+                    if (gm.calculaDistancia(this.transform,tile.transform) <= tileSpeed)
                     { // Si no está ocupado
                         if (tile.isClear() == true)
                         { // is the tile clear from any obstacles
@@ -195,6 +197,7 @@ public class Unit : MonoBehaviour
 				
                 GetWalkableTiles();
                 GetEnemies(null);
+                GetEnemyVillages(null);
 
                 if(playerNumber == 2)
                     Debug.Log("Estrategia de"+tipoUnidad+": "+unitControl.nombreObjetivo);
@@ -259,7 +262,7 @@ public class Unit : MonoBehaviour
                 if(i>=0 && i<gm.matrizTile.GetLength(0) && j>=0 && j<gm.matrizTile.GetLength(1))
                 {  
                     Tile tile = gm.matrizTile[i,j];
-                    if (gm.calculaDistancia(this,tile.transform) <= tileSpeed)
+                    if (gm.calculaDistancia(this.transform,tile.transform) <= tileSpeed)
                     { // how far he can move
                         if (tile.isClear() == true)
                         { // is the tile clear from any obstacles
@@ -281,14 +284,43 @@ public class Unit : MonoBehaviour
         {
             //Si se calcula los enemigos alcanzables desde la posición actual
             if((tilePos==null && 
-            gm.calculaDistancia(this,enemy) <= attackRadius)
+            gm.calculaDistancia(this.transform,enemy.transform) <= attackRadius)
             
             //O si se calculo desde la posición de un tile determinado
             || (tilePos!=null &&
-            gm.calculaDistancia(enemy,tilePos.transform) <= attackRadius)) // check is the enemy is near enough to attack
+            gm.calculaDistancia(enemy.transform,tilePos.transform) <= attackRadius)) // check is the enemy is near enough to attack
             {
                 if (enemy.playerNumber != gm.playerTurn && !hasAttacked) { // make sure you don't attack your allies
                     enemiesInRange.Add(enemy);
+                    
+                    //Solo se muestra el icono si es el turno del jugador
+                    if(playerNumber==1)
+                        enemy.weaponIcon.SetActive(true);
+                }
+
+            }
+            
+        }
+    }
+
+    //Al seleccionar la unidad, se muestran también las aldeas atacables
+    public void GetEnemyVillages(Tile tilePos) {
+    
+        enemyVillagesInRange.Clear();
+
+        Village[] aldeas = FindObjectsOfType<Village>();
+        foreach (Village enemy in aldeas)
+        {
+            //Si se calcula los enemigos alcanzables desde la posición actual
+            if((tilePos==null && 
+            gm.calculaDistancia(this.transform,enemy.transform) <= attackRadius)
+            
+            //O si se calculo desde la posición de un tile determinado
+            || (tilePos!=null &&
+            gm.calculaDistancia(enemy.transform,tilePos.transform) <= attackRadius)) // check is the enemy is near enough to attack
+            {
+                if (enemy.playerNumber != gm.playerTurn && !hasAttacked) { // make sure you don't attack your allies
+                    enemyVillagesInRange.Add(enemy);
                     
                     //Solo se muestra el icono si es el turno del jugador
                     if(playerNumber==1)
@@ -342,7 +374,7 @@ public class Unit : MonoBehaviour
                 if(i>=0 && i<gm.matrizTile.GetLength(0) && j>=0 && j<gm.matrizTile.GetLength(1))
                 {  
                     Tile tile = gm.matrizTile[i,j];
-                    if (gm.calculaDistancia(this,tile.transform) <= tileSpeed)
+                    if (gm.calculaDistancia(this.transform,tile.transform) <= tileSpeed)
                     { // how far he can move
                         if (tile.isClear() == true)
                         { // is the tile clear from any obstacles
@@ -352,8 +384,8 @@ public class Unit : MonoBehaviour
                               // si más de un tile cumple esa función, se obtiene el más cercano, incluso
                               // si es el tilePosición actual
                               if(tile_atacar==null || 
-                              gm.calculaDistancia(this,tile.transform) <=
-                              gm.calculaDistancia(this,tile_atacar.transform)) 
+                              gm.calculaDistancia(this.transform,tile.transform) <=
+                              gm.calculaDistancia(this.transform,tile_atacar.transform)) 
                                 tile_atacar = tile;
                           }
                         }
@@ -381,7 +413,7 @@ public class Unit : MonoBehaviour
                 if(i>=0 && i<gm.matrizTile.GetLength(0) && j>=0 && j<gm.matrizTile.GetLength(1))
                 {  
                     Tile tile = gm.matrizTile[i,j];
-                    if (gm.calculaDistancia(this,tile.transform) <= tileSpeed)
+                    if (gm.calculaDistancia(this.transform,tile.transform) <= tileSpeed)
                     { // how far he can move
                         if (tile.isClear() == true)
                         { // is the tile clear from any obstacles
@@ -402,7 +434,35 @@ public class Unit : MonoBehaviour
     //La unidad ataca a una villa enemiga
     public void Attack(Village aldea)
     {
+         hasAttacked = true;
 
+        int enemyDamege = attackDamage - aldea.resistance;
+
+        if (enemyDamege >= 1)
+        {
+            aldea.health -= enemyDamege;
+            DamageIcon d = Instantiate(damageIcon, aldea.transform.position, Quaternion.identity);
+            d.Setup(enemyDamege);
+        }
+
+        if (aldea.health <= 0)
+        {
+         
+            if (deathEffect != null){
+				Instantiate(deathEffect, aldea.transform.position, Quaternion.identity);
+				camAnim.SetTrigger("shake");
+			}
+
+            GetWalkableTiles(); // check for new walkable tiles (if enemy has died we can now walk on his tile)
+            //Si el enemigo era de la IA, se ha de borrar de la lista del IAPlayer
+            aldea.PintarInfluencia(false);
+            //gm.RemoveInfoPanel(enemy);
+
+            //Si el enemigo era del jugador, la IA debe de dejar de considerarlo como enemigo objetivo de la unidad
+            //if(aldea.playerNumber==1)    gm.OlvidarEnemigoMatado(aldea);
+            Destroy(aldea.gameObject);
+        }
+        gm.UpdateInfoStats();
     }
 
     // La unidad seleccionada por GM ataca a la seleccionada en OnMouseDown (enemy)
@@ -422,7 +482,7 @@ public class Unit : MonoBehaviour
 
         if (transform.tag == "Archer" && enemy.tag != "Archer")
         {
-            if (gm.calculaDistancia(this, enemy) <= 1) // check is the enemy is near enough to attack
+            if (gm.calculaDistancia(this.transform, enemy.transform) <= 1) // check is the enemy is near enough to attack
             {
                 if (unitDamage >= 1)
                 {
@@ -499,6 +559,13 @@ public class Unit : MonoBehaviour
 
     // Desactivar el icono de atacar
     public void ResetWeaponIcon() {
+        //Se resetean los iconos de enemigos y aldeas
+        Village[] aldeas = FindObjectsOfType<Village>();
+        foreach (Village aldea in aldeas)
+        {
+            aldea.weaponIcon.SetActive(false);
+        }
+        
         Unit[] enemies = FindObjectsOfType<Unit>();
         foreach (Unit enemy in enemies)
         {
@@ -523,6 +590,7 @@ public class Unit : MonoBehaviour
         PintarInfluencia(true);
         ResetWeaponIcon();
         GetEnemies(null);
+        GetEnemyVillages(null);
         gm.MoveInfoPanel(this);
 
         //Si es una unidad de la IA, se le notifica al gm para que el iaPlayer continue

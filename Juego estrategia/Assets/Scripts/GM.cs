@@ -330,16 +330,10 @@ public class GM : MonoBehaviour
     }
 
     //Para realizar más eficientemente los cálculos de distancia entre unidades
-    public float calculaDistancia(Unit unidad, Unit enemigo)
+    public float calculaDistancia(Transform unidad, Transform elemento)
     {
-        return Mathf.Abs(unidad.transform.position.x - enemigo.transform.position.x) 
-        + Mathf.Abs(unidad.transform.position.y - enemigo.transform.position.y);
-    }
-
-    public float calculaDistancia(Unit unidad, Transform elemento)
-    {
-        return Mathf.Abs(unidad.transform.position.x - elemento.position.x) 
-        + Mathf.Abs(unidad.transform.position.y - elemento.position.y);
+        return Mathf.Abs(unidad.position.x - elemento.position.x) 
+        + Mathf.Abs(unidad.position.y - elemento.position.y);
     }
 
     public void OlvidarEnemigoMatado(Unit enemigo)

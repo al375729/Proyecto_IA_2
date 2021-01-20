@@ -14,8 +14,13 @@ public class Village : MonoBehaviour
     //Variable por la cual se pintará la influencia
     public int factorInfluencia = 3;
     public int health;
+    public int resistance;  //Equivalente a armor en Unit
 
     public Tile tilePosicion;
+
+    //Para que sean atacables
+    public GameObject weaponIcon;
+    public DamageIcon damageIcon;
 
     private void Start()
     {
@@ -64,10 +69,51 @@ public class Village : MonoBehaviour
 
     }
 
+    private void OnMouseDown() //Seleccionar aldea para atacarla
+    {
+        //Sólo se atacan si hay una unidad seleccionada, es del bando contrario y la tiene a su alcance de ataque
+        /*Collider2D col = Physics2D.OverlapCircle(Camera.main.ScreenToWorldPoint(Input.mousePosition), 0.15f);
+        if (col != null)
+        {
+            // Obtener enemigo al que atacar y comprobar si es atacable por la unidad seleccionada
+            Village aldea = col.GetComponent<Village>(); // double check that what we clicked on is a unit
+            if (unit != null && gm.selectedUnit != null)
+            {
+                if (gm.selectedUnit.enemiesInRange.Contains(unit) && !gm.selectedUnit.hasAttacked)
+                { // does the currently selected unit have in his list the enemy we just clicked on
+                    gm.selectedUnit.Attack(unit);
+
+                }
+            }
+        }*/
+        ResetWeaponIcon();
+        //Sólo se atacan si hay una unidad seleccionada, es del bando contrario y la tiene a su alcance de ataque
+        if(gm.selectedUnit!=null && gm.selectedUnit.enemyVillagesInRange.Contains(this) && !gm.selectedUnit.hasAttacked)
+        {
+            gm.selectedUnit.Attack(this);
+        }
+
+    }
+
     public void AldeaDestruida()
     {
         PintarInfluencia(false);
         Destroy(gameObject);
+    }
+
+    public void ResetWeaponIcon() {
+        //Se resetean los iconos de enemigos y aldeas
+        Village[] aldeas = FindObjectsOfType<Village>();
+        foreach (Village aldea in aldeas)
+        {
+            aldea.weaponIcon.SetActive(false);
+        }
+
+        Unit[] enemies = FindObjectsOfType<Unit>();
+        foreach (Unit enemy in enemies)
+        {
+            enemy.weaponIcon.SetActive(false);
+        }
     }
     
 }
